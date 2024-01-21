@@ -1,1 +1,0 @@
-import style from './CineLogo.module.scss'
