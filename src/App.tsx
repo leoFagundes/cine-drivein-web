@@ -4,12 +4,9 @@ import './Global.scss';
 
 function App() {
 
-  return (
-      <>
-          <Input errorLabel="Salve familia" type='password' onChange={() => console.log('')} placeholder={'Naruto'} />
-          <Router />
-      </>
-  );
+    return (
+        <Router />
+    );
 }
 
 export default App;
