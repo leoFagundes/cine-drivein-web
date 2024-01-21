@@ -1,12 +1,11 @@
 import Router from './routes';
-import {Input} from './Components/Atoms/Input/Input';
 import './Global.scss';
 
 function App() {
 
-    return (
-        <Router />
-    );
+  return (
+    <Router />
+  );
 }
 
 export default App;
