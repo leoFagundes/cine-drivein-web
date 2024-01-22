@@ -7,7 +7,7 @@ $success-color: #268f3ff5;
 $gray-color: #d9d9d9;
 $placeholder-color: #4a4a4a;
 $background-color: #212529;
-$branckground-secondary-color: #1d2022;
+$background-secondary-color: #1d2022;
 
 $font-size-small: 12px;
 $font-size-medium-small: 14px;
@@ -17,11 +17,9 @@ $font-size-large: 20px;
 $font-size-extra-large: 24px;
 
 body {
-  background-color: $branckground-secondary-color;
+  background-color: $background-secondary-color;
 }
-$background-secondary-color: #1d2022;
 
 * {
   font-family: "Montserrat", sans-serif;
-  color: $main-white;
 }

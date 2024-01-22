@@ -1,7 +1,7 @@
 import styles from './Input.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-import {useState} from "react";
+import { useState } from "react";
 
 type InputType = {
     value?: string;
@@ -10,7 +10,7 @@ type InputType = {
     errorLabel?: string;
     type?: string;
 }
-export const Input = ({value, placeholder, onChange, errorLabel, type}: InputType) => {
+export const Input = ({ value, placeholder, onChange, errorLabel, type }: InputType) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     const handlePassword = () => {
@@ -22,10 +22,10 @@ export const Input = ({value, placeholder, onChange, errorLabel, type}: InputTyp
     const IS_PASSWORD_VISIBLE_TYPE = isPasswordVisible ? undefined : type;
     return (
         <div className={styles.container}>
-            <input type={IS_PASSWORD_VISIBLE_TYPE} value={value} placeholder={placeholder} onChange={onChange} className={IS_ERROR_INPUT_STYLE}/>
+            <input type={IS_PASSWORD_VISIBLE_TYPE} value={value} placeholder={placeholder} onChange={onChange} className={IS_ERROR_INPUT_STYLE} />
             {type === 'password' &&
                 <div aria-label='icone de olho' onClick={handlePassword} className={styles.icon}>
-                    <FontAwesomeIcon size='lg' icon={IS_PASSWORD_VISIBLE_ICON}/>
+                    <FontAwesomeIcon color='#4a4a4a' size='lg' icon={IS_PASSWORD_VISIBLE_ICON} />
                 </div>
             }
             {errorLabel && <label className={styles.labelError}>{errorLabel}</label>}
