@@ -2,11 +2,11 @@
 
 .mainText {
   text-align: center;
-  font-size: 12px;
+  font-size: $font-size-medium-small;
 }
 
 .isLink {
-  font-size: 10px;
+  font-size: $font-size-small;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

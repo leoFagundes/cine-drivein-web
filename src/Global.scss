@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif:wght@400;500;600;700&display=swap");
+
 $primary-color: #0088c2;
 $main-white: #f9f9f9;
 $invalid-color: #ff5555;
@@ -7,6 +9,19 @@ $placeholder-color: #4a4a4a;
 $background-color: #212529;
 $branckground-secondary-color: #1d2022;
 
+$font-size-small: 12px;
+$font-size-medium-small: 14px;
+$font-size-medium: 16px;
+$font-size-medium-large: 18px;
+$font-size-large: 20px;
+$font-size-extra-large: 24px;
+
 body {
   background-color: $branckground-secondary-color;
+}
+$background-secondary-color: #1d2022;
+
+* {
+  font-family: "Montserrat", sans-serif;
+  color: $main-white;
 }

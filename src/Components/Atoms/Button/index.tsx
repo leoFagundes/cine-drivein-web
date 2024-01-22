@@ -1,4 +1,4 @@
-import style from './ButtonPattern.module.scss'
+import style from './Button.module.scss'
 
 type Props = {
     type: "button" | "submit" | "reset" | undefined;
@@ -6,7 +6,7 @@ type Props = {
     mainText?: string;
 };
 
-export default function ButtonPattern({ type, onClick, mainText }: Props) {
+export default function Button({ type, onClick, mainText }: Props) {
     return (
         <button type={type} className={style.button} onClick={onClick}>
             {mainText}

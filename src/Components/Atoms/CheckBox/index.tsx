@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import style from './CheckBoxPattern.module.scss'
+import style from './CheckBox.module.scss'
 
 type Props = {
     checked?: boolean
     onChange?: (isChecked: boolean) => void;
 }
 
-export default function CheckBoxPattern({ onChange, checked = false }: Props) {
+export default function CheckBox({ onChange, checked = false }: Props) {
     const [isChecked, setChecked] = useState(checked);
 
     const handleCheckboxChange = () => {

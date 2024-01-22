@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import style from './Home.module.scss'
 import ScheduleRepositories from '../../Services/repositories/ScheduleRepositories';
 import LogoImage from '../../Components/Atoms/LogoImage';
-import ButtonPattern from '../../Components/Atoms/ButtonPattern';
-import TextPattern from '../../Components/Atoms/TextPattern';
+import Button from '../../Components/Atoms/Button';
+import Text from '../../Components/Atoms/Text';
+import { Input } from '../../Components/Atoms/Input/Input';
 
 export default function Home() {
     const [isServiceOpen, setIsServiceOpen] = useState<boolean>();
     const [closingTime, setClosingTime] = useState("");
     const [openingTime, setOpeningTime] = useState("");
     const [randomImage, setRandomImage] = useState("Harley");
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,9 +47,10 @@ export default function Home() {
         return (
             <section className={style.homeContainer}>
                 <LogoImage />
-                <TextPattern>Para fazer seu pedido, preencha os campos abaixo</TextPattern>
-                <ButtonPattern mainText='Ir para o cardápio' type='button' />
-                <TextPattern isLink >Precisa de Ajuda?</TextPattern>
+                <Text>Para fazer seu pedido, preencha os campos abaixo</Text>
+                <Input placeholder='teste' onChange={() => console.log('teste')} type='password' />
+                <Button mainText='Ir para o cardápio' type='button' />
+                <Text isLink >Precisa de Ajuda?</Text>
             </section>
         )
     } else {
