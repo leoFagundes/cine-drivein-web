@@ -30,26 +30,26 @@ export default function Home() {
         fetchData();
     }, []);
 
-    const generateRandomName = () => {
+    const getRandomDiceImageString = () => {
         const length = Math.floor(Math.random() * (8 - 4 + 1)) + 4;
         const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let randomName = '';
+        let randomString = '';
 
         for (let i = 0; i < length; i++) {
             const randomIndex = Math.floor(Math.random() * characters.length);
-            randomName += characters.charAt(randomIndex);
+            randomString += characters.charAt(randomIndex);
         }
 
-        return randomName;
+        return randomString;
     };
 
     if (isServiceOpen) {
         return (
             <section className={style.homeContainer}>
                 <LogoImage />
-                <Text>Para fazer seu pedido, preencha os campos abaixo</Text>
+                <Text fontSize='extraLarge'>Para fazer seu pedido, preencha os campos abaixo</Text>
                 <Input placeholder='teste' onChange={() => console.log('teste')} type='password' />
-                <Button mainText='Ir para o cardápio' type='button' />
+                <Button label='Ir para o cardápio' onClick={() => console.log('')} />
                 <Text isLink >Precisa de Ajuda?</Text>
             </section>
         )
@@ -67,7 +67,7 @@ export default function Home() {
                         </p>
                     </div>
                     <img
-                        onClick={() => setRandomImage(generateRandomName())}
+                        onClick={() => setRandomImage(getRandomDiceImageString())}
                         src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${randomImage}`}
                         alt="avatar"
                         className={style.randomImage}
