@@ -4,7 +4,7 @@ import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 
 type InputType = {
-    value?: string;
+    value: string;
     placeholder: string;
     onChange: VoidFunction;
     errorLabel?: string;

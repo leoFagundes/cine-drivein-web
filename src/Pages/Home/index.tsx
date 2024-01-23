@@ -32,6 +32,7 @@ export default function Home() {
             <FormTemplate
                 label="Para fazer seu pedido, preencha os campos abaixo"
                 inputs={[{
+                    value: 'test',
                     placeholder: 'teste',
                     onChange: () => console.log('test'),
                     type: 'password'

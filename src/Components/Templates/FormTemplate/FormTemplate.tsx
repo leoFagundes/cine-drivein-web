@@ -7,6 +7,7 @@ import Button from "../../Atoms/Button";
 type FormTemplateType = {
     label: string,
     inputs: [{
+        value: string;
         placeholder: string;
         onChange: VoidFunction;
         type?: string;
@@ -23,7 +24,13 @@ export const FormTemplate = ({ label, inputs, buttonLabel, onClick, linkLabel }:
             <Text fontSize='extraLarge'>{label}</Text>
             {
                 inputs.map((item) => {
-                    return <Input placeholder={item.placeholder} onChange={item.onChange} type={item.type} />
+                    return <Input
+                        key={item.placeholder}
+                        value={item.value}
+                        placeholder={item.placeholder}
+                        onChange={item.onChange}
+                        type={item.type}
+                    />
                 })
             }
             <Button label={buttonLabel} onClick={onClick}/>
