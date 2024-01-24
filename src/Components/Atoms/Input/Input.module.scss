@@ -9,7 +9,7 @@
 }
 
 .inputContainer {
-  width: 300px;
+  width: 260px;
   height: 48px;
   background: $main-white;
   border-radius: 5px;
@@ -31,7 +31,7 @@
   }
 
   &__isNegative {
-    width: 300px;
+    width: 260px;
     height: 48px;
     background: $main-white;
     border-radius: 5px;
@@ -61,8 +61,8 @@
 }
 
 .labelError {
-  margin-top: 4px;
-  margin-left: 2px;
+  position: absolute;
+  transform: translate(4px, 52px);
   color: $invalid-color;
   font-size: 12px;
   font-weight: 600;
