@@ -1,11 +1,13 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import style from './Home.module.scss'
 import ScheduleRepositories from '../../Services/repositories/ScheduleRepositories';
 import { FormTemplate } from "../../Components/Templates/FormTemplate/FormTemplate";
 import { CloseTemplate } from "../../Components/Templates/CloseTemplate/CloseTemplate";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import {LoadingFullScreenTemplate} from "../../Components/Templates/LoadingFullScreenTemplate";
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import Caption from '../../Components/Molecules/Caption';
+import { LoadingFullScreenTemplate } from "../../Components/Templates/LoadingFullScreenTemplate";
 
 const ERROR_NAME_MESSAGE = 'Nome de usuário inválido.'
 const ERROR_PHONE_MESSAGE = 'Número de telefone inválido.'
@@ -32,9 +34,9 @@ export default function Home() {
                 const data = await ScheduleRepositories.getSchedule();
 
                 setScheduleInformation({
-                   isServiceOpen: data.isOpen,
-                   closingTime: data.closingTime,
-                   openingTime: data.openingTime
+                    isServiceOpen: data.isOpen,
+                    closingTime: data.closingTime,
+                    openingTime: data.openingTime
                 });
                 setIsLoading(false);
             } catch (error) {
@@ -106,9 +108,11 @@ export default function Home() {
         window.open(whatsappUrl, "_blank");
     };
 
-    if(isLoading) return <LoadingFullScreenTemplate />
+    if (isLoading) return <LoadingFullScreenTemplate />
 
     if (scheduleInformation.isServiceOpen) {
+        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => console.log('teste')} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo} />} label='Como encontrar minha vaga?' />
+
         return (
             <FormTemplate
                 label="Para fazer seu pedido, preencha os campos abaixo"
@@ -132,7 +136,8 @@ export default function Home() {
                         placeholder: 'Vaga',
                         onChange: (e) => handleSpotWith(e.target.value),
                         type: 'number',
-                        errorLabel: spotError
+                        errorLabel: spotError,
+                        caption: PARKING_CAPTION_COMPONENT
                     }
                 ]}
                 buttonLabel='Ir para o cardápio'
