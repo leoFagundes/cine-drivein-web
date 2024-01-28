@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Caption from '../../Components/Molecules/Caption';
-
+import { LoadingFullScreenTemplate } from "../../Components/Templates/LoadingFullScreenTemplate";
 
 const ERROR_NAME_MESSAGE = 'Nome de usuário inválido.'
 const ERROR_PHONE_MESSAGE = 'Número de telefone inválido.'
@@ -25,9 +25,11 @@ export default function Home() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [spot, setSpot] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             try {
                 const data = await ScheduleRepositories.getSchedule();
 
@@ -36,11 +38,13 @@ export default function Home() {
                     closingTime: data.closingTime,
                     openingTime: data.openingTime
                 });
+                setIsLoading(false);
             } catch (error) {
                 console.error(
                     "Erro ao obter dados do horário de funcionamento:",
                     error,
                 );
+                setIsLoading(false);
             }
         };
         fetchData();
@@ -103,6 +107,8 @@ export default function Home() {
         const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedNumber}`;
         window.open(whatsappUrl, "_blank");
     };
+
+    if (isLoading) return <LoadingFullScreenTemplate />
 
     if (scheduleInformation.isServiceOpen) {
         return (
