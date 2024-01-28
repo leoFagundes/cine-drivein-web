@@ -1,0 +1,36 @@
+@import "../../../Global.scss";
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(33,37,41, 60%);
+}
+
+.modalContainer {
+  display: flex;
+  max-width: 300px;
+  width: 70%;
+  min-height: 300px;
+  height: fit-content;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 32px 40px 32px;
+  background: $main-white;
+  margin-bottom: 100px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 2px 0px rgba(255, 255, 255, 0.20);
+  color: $placeholder-color;
+}
+
+.modalImg {
+  width: 100%;
+  height: 150px;
+  border-radius: 8px;
+}

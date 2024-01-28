@@ -26,14 +26,14 @@ type FormTemplateType = {
 
 export const FormTemplate = ({ label, inputs, buttonLabel, buttonOnClick, linkLabel, linkIcon, linkOnClick }: FormTemplateType) => {
     const getInputMargin = (index: number, errorLabel: string) => {
-        if (index === 0) return ''
+        if (index === 0) return '40px'
         if (errorLabel) return '12px'
         return '24px'
     }
     return (
         <section className={styles.container}>
             <LogoImage />
-            <Text fontSize='extraLarge'>{label}</Text>
+            <Text marginTop="40px" fontSize='mediumLarge'>{label}</Text>
             <div className={styles.inputs}>
                 {
                     inputs.map((item, index) => {
