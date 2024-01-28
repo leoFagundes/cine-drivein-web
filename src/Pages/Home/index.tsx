@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import style from './Home.module.scss'
 import ScheduleRepositories from '../../Services/repositories/ScheduleRepositories';
 import { FormTemplate } from "../../Components/Templates/FormTemplate/FormTemplate";
@@ -11,9 +11,11 @@ const ERROR_PHONE_MESSAGE = 'Número de telefone inválido.'
 const ERROR_SPOT_MESSAGE = 'Vaga inválida.'
 
 export default function Home() {
-    const [isServiceOpen, setIsServiceOpen] = useState<boolean>();
-    const [closingTime, setClosingTime] = useState("");
-    const [openingTime, setOpeningTime] = useState("");
+    const [scheduleInformation, setScheduleInformation] = useState({
+        openingTime: '',
+        closingTime: '',
+        isServiceOpen: false
+    })
     const [nameError, setNameError] = useState<string>('');
     const [phoneError, setPhoneError] = useState<string>('');
     const [spotError, setSpotError] = useState<string>('');
@@ -26,9 +28,11 @@ export default function Home() {
             try {
                 const data = await ScheduleRepositories.getSchedule();
 
-                setIsServiceOpen(data.isOpen);
-                setClosingTime(data.closingTime);
-                setOpeningTime(data.openingTime);
+                setScheduleInformation({
+                   isServiceOpen: data.isOpen,
+                   closingTime: data.closingTime,
+                   openingTime: data.openingTime
+                });
             } catch (error) {
                 console.error(
                     "Erro ao obter dados do horário de funcionamento:",
@@ -39,24 +43,21 @@ export default function Home() {
         fetchData();
     }, []);
 
-    const handleInputChange = (field: string, value: string | number | boolean) => {
-        switch (field) {
-            case "name":
-                setName(value as string);
-                setNameError('');
-                break;
-            case "phone":
-                setPhone(value as string);
-                setPhoneError('');
-                break;
-            case "spot":
-                setSpot(value as string);
-                setSpotError('');
-                break;
-            default:
-                break;
-        }
-    };
+    const handleNameWith = (value: string) => {
+        setName(value);
+        setNameError('');
+    }
+
+    const handlePhoneWith = (value: string) => {
+        setPhone(value);
+        setPhoneError('');
+    }
+
+    const handleSpotWith = (value: string) => {
+        setSpot(value);
+        setSpotError('');
+    }
+
 
     const validateForm = () => {
         let isValid = true;
@@ -100,7 +101,7 @@ export default function Home() {
         window.open(whatsappUrl, "_blank");
     };
 
-    if (isServiceOpen) {
+    if (scheduleInformation.isServiceOpen) {
         return (
             <FormTemplate
                 label="Para fazer seu pedido, preencha os campos abaixo"
@@ -108,21 +109,21 @@ export default function Home() {
                     {
                         value: name,
                         placeholder: 'Nome',
-                        onChange: (e) => handleInputChange("name", e.target.value),
+                        onChange: (e) => handleNameWith(e.target.value),
                         type: 'text',
                         errorLabel: nameError
                     },
                     {
                         value: phone,
                         placeholder: 'Telefone',
-                        onChange: (e) => handleInputChange("phone", e.target.value),
+                        onChange: (e) => handlePhoneWith(e.target.value),
                         type: 'text',
                         errorLabel: phoneError
                     },
                     {
                         value: spot,
                         placeholder: 'Vaga',
-                        onChange: (e) => handleInputChange("spot", e.target.value),
+                        onChange: (e) => handleSpotWith(e.target.value),
                         type: 'number',
                         errorLabel: spotError
                     }
@@ -142,8 +143,8 @@ export default function Home() {
                 <h3>Estamos Fechados</h3>
                 <p>Horário de Funcionamento da Lanchonete:</p>
                 <p>
-                    de <strong>{openingTime}</strong> até{" "}
-                    <strong>{closingTime}</strong>
+                    de <strong>{scheduleInformation.openingTime}</strong> até{" "}
+                    <strong>{scheduleInformation.closingTime}</strong>
                 </p>
             </div>
         </CloseTemplate>
