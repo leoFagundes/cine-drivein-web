@@ -3,7 +3,8 @@ import LogoImage from "../../Atoms/LogoImage";
 import Text from "../../Atoms/Text";
 import { Input } from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button";
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
+import Caption from '../../Molecules/Caption';
 
 type FormTemplateType = {
     label: string,
@@ -13,6 +14,7 @@ type FormTemplateType = {
         onChange: (e: ChangeEvent<HTMLInputElement>) => void;
         type?: string;
         errorLabel: string;
+        caption?: ReactNode;
     }>;
     buttonLabel: string;
     buttonOnClick: VoidFunction;
@@ -24,8 +26,8 @@ type FormTemplateType = {
 
 export const FormTemplate = ({ label, inputs, buttonLabel, buttonOnClick, linkLabel, linkIcon, linkOnClick }: FormTemplateType) => {
     const getInputMargin = (index: number, errorLabel: string) => {
-        if(index === 0) return ''
-        if(errorLabel) return '12px'
+        if (index === 0) return ''
+        if (errorLabel) return '12px'
         return '24px'
     }
     return (
@@ -43,15 +45,13 @@ export const FormTemplate = ({ label, inputs, buttonLabel, buttonOnClick, linkLa
                             type={item.type}
                             errorLabel={item.errorLabel}
                             marginTop={getInputMargin(index, item.errorLabel)}
+                            caption={item.caption && item.caption}
                         />
                     })
                 }
             </div>
             <Button label={buttonLabel} onClick={buttonOnClick} />
-            <div className={styles.linkContainer} onClick={linkOnClick}>
-                {linkIcon && linkIcon}
-                {linkLabel && <Text isLink>{linkLabel}</Text>}
-            </div>
+            <Caption onClick={linkOnClick} isLink icon={linkIcon} label={linkLabel} />
         </section>
     )
 }
