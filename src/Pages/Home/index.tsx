@@ -111,6 +111,8 @@ export default function Home() {
     if (isLoading) return <LoadingFullScreenTemplate />
 
     if (scheduleInformation.isServiceOpen) {
+        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => console.log('teste')} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo} />} label='Como encontrar minha vaga?' />
+
         return (
             <FormTemplate
                 label="Para fazer seu pedido, preencha os campos abaixo"
@@ -135,7 +137,7 @@ export default function Home() {
                         onChange: (e) => handleSpotWith(e.target.value),
                         type: 'number',
                         errorLabel: spotError,
-                        caption: <Caption isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo} />} label='Como encontrar minha vaga?' />
+                        caption: PARKING_CAPTION_COMPONENT
                     }
                 ]}
                 buttonLabel='Ir para o cardápio'

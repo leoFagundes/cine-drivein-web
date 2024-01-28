@@ -45,7 +45,7 @@ export const FormTemplate = ({ label, inputs, buttonLabel, buttonOnClick, linkLa
                             type={item.type}
                             errorLabel={item.errorLabel}
                             marginTop={getInputMargin(index, item.errorLabel)}
-                            caption={item.caption && item.caption}
+                            caption={item.caption}
                         />
                     })
                 }
