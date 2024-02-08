@@ -32,7 +32,7 @@ export const FormTemplate = ({ label, inputs, buttonLabel, buttonOnClick, linkLa
     }
     return (
         <section className={styles.container}>
-            <LogoImage />
+            <LogoImage marginTop='32px' />
             <Text fontSize='extraLarge'>{label}</Text>
             <div className={styles.inputs}>
                 {
