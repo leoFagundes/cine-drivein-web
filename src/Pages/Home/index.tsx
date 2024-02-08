@@ -8,6 +8,9 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Caption from '../../Components/Molecules/Caption';
 import { LoadingFullScreenTemplate } from "../../Components/Templates/LoadingFullScreenTemplate";
+import {Modal} from "../../Components/Organism/Modal";
+import styles from "../../Components/Organism/Modal/Modal.module.scss";
+import Text from "../../Components/Atoms/Text";
 
 const ERROR_NAME_MESSAGE = 'Nome de usuário inválido.'
 const ERROR_PHONE_MESSAGE = 'Número de telefone inválido.'
@@ -26,6 +29,7 @@ export default function Home() {
     const [phone, setPhone] = useState("");
     const [spot, setSpot] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isParkingModalOpen, setIsParkinModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -108,44 +112,62 @@ export default function Home() {
         window.open(whatsappUrl, "_blank");
     };
 
-    if (isLoading) return <LoadingFullScreenTemplate />
+
+    if (isLoading) return <LoadingFullScreenTemplate/>
 
     if (scheduleInformation.isServiceOpen) {
-        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => console.log('teste')} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo} />} label='Como encontrar minha vaga?' />
+        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => setIsParkinModalOpen(true)} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo}/>} label='Como encontrar minha vaga?'/>
+        const renderModalInfo = () => (
+            <>
+                <img className={styles.modalImg} src="https://i.ytimg.com/vi/J-ZKsCpTNPc/maxresdefault.jpg"
+                     alt="Imagem da vaga"/>
+                <Text marginTop="16px" fontColor='placeholder-color' fontWeight='semibold'>
+                    Para encontrar sua vaga consulte os <Text fontColor='primary-color' fontWeight='bold'>dígitos</Text> que se
+                    encontram na <Text fontColor='primary-color' fontWeight='bold'>lateral esquerda</Text>. Como mostra na
+                    imagem acima.
+                </Text>
+            </>
+        )
 
         return (
-            <FormTemplate
-                label="Para fazer seu pedido, preencha os campos abaixo"
-                inputs={[
-                    {
-                        value: name,
-                        placeholder: 'Nome',
-                        onChange: (e) => handleNameWith(e.target.value),
-                        type: 'text',
-                        errorLabel: nameError
-                    },
-                    {
-                        value: phone,
-                        placeholder: 'Telefone',
-                        onChange: (e) => handlePhoneWith(e.target.value),
-                        type: 'text',
-                        errorLabel: phoneError
-                    },
-                    {
-                        value: spot,
-                        placeholder: 'Vaga',
-                        onChange: (e) => handleSpotWith(e.target.value),
-                        type: 'number',
-                        errorLabel: spotError,
-                        caption: PARKING_CAPTION_COMPONENT
-                    }
-                ]}
-                buttonLabel='Ir para o cardápio'
-                buttonOnClick={handleSubmit}
-                linkLabel='Precisa de Ajuda?'
-                linkIcon={<FontAwesomeIcon color='#268f3ff5' icon={faWhatsapp} />}
-                linkOnClick={openWhatsApp}
-            />
+            <>
+                <FormTemplate
+                    label="Para fazer seu pedido, preencha os campos abaixo"
+                    inputs={[
+                        {
+                            value: name,
+                            placeholder: 'Nome',
+                            onChange: (e) => handleNameWith(e.target.value),
+                            type: 'text',
+                            errorLabel: nameError
+                        },
+                        {
+                            value: phone,
+                            placeholder: 'Telefone',
+                            onChange: (e) => handlePhoneWith(e.target.value),
+                            type: 'text',
+                            errorLabel: phoneError
+                        },
+                        {
+                            value: spot,
+                            placeholder: 'Vaga',
+                            onChange: (e) => handleSpotWith(e.target.value),
+                            type: 'number',
+                            errorLabel: spotError,
+                            caption: PARKING_CAPTION_COMPONENT
+                        }
+                    ]}
+                    buttonLabel='Ir para o cardápio'
+                    buttonOnClick={handleSubmit}
+                    linkLabel='Precisa de Ajuda?'
+                    linkIcon={<FontAwesomeIcon color='#268f3ff5' icon={faWhatsapp} />}
+                    linkOnClick={openWhatsApp}
+                />
+
+                <Modal isOpen={isParkingModalOpen} onClose={() => setIsParkinModalOpen(false)}>
+                    {renderModalInfo()}
+                </Modal>
+            </>
         )
     }
 
