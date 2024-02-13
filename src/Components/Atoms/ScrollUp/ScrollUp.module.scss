@@ -1,0 +1,33 @@
+@import "../../../Global.scss";
+
+.container {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  transition: opacity 0.3s ease-in-out;
+  bottom: 8px;
+  right: 8px;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    z-index: 2;
+    border-radius: 50px;
+    background-color: $background-color;
+  }
+
+  label {
+    padding: 4px;
+    border-radius: 5px;
+    background-color: $background-color;
+  }
+
+  &.isInvisible {
+    opacity: 0;
+  }
+}

@@ -1,3 +1,4 @@
+import ScrollUp from '../../Components/Atoms/ScrollUp'
 import OrderTemplate from '../../Components/Templates/OrderTemplate'
 import styles from './Order.module.scss'
 
@@ -7,6 +8,7 @@ export default function Order() {
             <OrderTemplate
                 label='Cardápio'
             />
+            <ScrollUp />
         </section>
     )
 }

@@ -26,7 +26,22 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         debit_payment: 0,
         service_fee: 0,
         total_value: 0,
-        items: []
+        items:
+            [
+                // {
+                //     item: {
+                //         cod_item: "teste",
+                //         name: "teste",
+                //         type: "teste",
+                //         description: "Delicious Hot Dog with special sauce",
+                //         value: 15.0,
+                //         quantity: 1,
+                //         photo: "https://example.com/hamburguer.jpg",
+                //         additionals_sauces: [{ additionalItem: "65a04ba4b6611f7ff12f5393" }]
+                //     },
+                //     observation: 'Teste'
+                // },
+            ]
     });
     const location = useLocation();
     const navigate = useNavigate();
@@ -92,7 +107,10 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
             </Text>
             <div className={styles.menuOrder}>
                 <FontAwesomeIcon size='xl' icon={faCartShopping} color='white' />
-                Pedido
+                <Text fontSize='mediumSmall'>Pedido</Text>
+                <div className={`${styles.quantityNotification} ${order.items.length > 0 && styles.isVisible}`}>
+                    <Text fontWeight='semibold' fontSize='small'>{order.items.length}</Text>
+                </div>
             </div>
             <div className={styles.menuTypes}>
                 {uniqueTypes.map(type => (
