@@ -8,9 +8,10 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import Caption from '../../Components/Molecules/Caption';
 import { LoadingFullScreenTemplate } from "../../Components/Templates/LoadingFullScreenTemplate";
-import {Modal} from "../../Components/Organism/Modal";
+import { Modal } from "../../Components/Organism/Modal";
 import styles from "../../Components/Organism/Modal/Modal.module.scss";
 import Text from "../../Components/Atoms/Text";
+import { useNavigate } from 'react-router-dom';
 
 const ERROR_NAME_MESSAGE = 'Nome de usuário inválido.'
 const ERROR_PHONE_MESSAGE = 'Número de telefone inválido.'
@@ -30,6 +31,7 @@ export default function Home() {
     const [spot, setSpot] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isParkingModalOpen, setIsParkinModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -103,7 +105,8 @@ export default function Home() {
             return
         }
 
-        console.log('>Ir para o cardápio<')
+        const orderUrl = `/order?name=${name}&phone=${phone}&spot=${spot}`;
+        navigate(orderUrl);
     }
 
     const openWhatsApp = () => {
@@ -113,14 +116,14 @@ export default function Home() {
     };
 
 
-    if (isLoading) return <LoadingFullScreenTemplate/>
+    if (isLoading) return <LoadingFullScreenTemplate />
 
     if (scheduleInformation.isServiceOpen) {
-        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => setIsParkinModalOpen(true)} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo}/>} label='Como encontrar minha vaga?'/>
+        const PARKING_CAPTION_COMPONENT = <Caption onClick={() => setIsParkinModalOpen(true)} isLink icon={<FontAwesomeIcon color='#0088c2' icon={faCircleInfo} />} label='Como encontrar minha vaga?' />
         const renderModalInfo = () => (
             <>
                 <img className={styles.modalImg} src="https://i.ytimg.com/vi/J-ZKsCpTNPc/maxresdefault.jpg"
-                     alt="Imagem da vaga"/>
+                    alt="Imagem da vaga" />
                 <Text marginTop="16px" fontColor='placeholder-color' fontWeight='semibold'>
                     Para encontrar sua vaga consulte os <Text fontColor='primary-color' fontWeight='bold'>dígitos</Text> que se
                     encontram na <Text fontColor='primary-color' fontWeight='bold'>lateral esquerda</Text>. Como mostra na
