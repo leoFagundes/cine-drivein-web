@@ -22,6 +22,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         username: "",
         phone: "",
         spot: 0,
+        money_payment: 0,
         credit_payment: 0,
         debit_payment: 0,
         service_fee: 0,
