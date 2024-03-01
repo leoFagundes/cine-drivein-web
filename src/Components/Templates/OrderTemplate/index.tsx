@@ -7,6 +7,7 @@ import ItemCard from '../../Organism/ItemCard';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { LoadingFullScreenTemplate } from '../LoadingFullScreenTemplate';
 
 type OrderTemplateType = {
     label: string
@@ -18,6 +19,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     const [items, setItems] = useState<Item[]>()
     const [uniqueTypes, setUniqueTypes] = useState<string[]>([]);
     const [currentMenuType, setCurrentMenuType] = useState(ALL_TYPES_LABEL)
+    const [isLoading, setIsLoading] = useState(false)
     const [order, setOrder] = useState<Order>({
         username: "",
         phone: "",
@@ -71,13 +73,16 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
 
     useEffect(() => {
         const fetchUniqueTypes = async () => {
+            setIsLoading(true)
             try {
                 const types = await ItemRepositories.getUniqueTypes();
                 const items = await ItemRepositories.getItems()
                 setUniqueTypes([ALL_TYPES_LABEL, ...types]);
                 setItems(items)
+                setIsLoading(false)
             } catch (error) {
                 console.error("Erro ao obter itens:", error);
+                setIsLoading(false)
             }
         };
 
@@ -96,6 +101,8 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
             </div>
         );
     };
+
+    if (isLoading) return <LoadingFullScreenTemplate />
 
     return (
         <section className={styles.container}>
