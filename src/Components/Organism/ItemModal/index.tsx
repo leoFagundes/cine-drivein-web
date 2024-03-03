@@ -42,7 +42,7 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
         let isValid = true;
         const newValueError = { ...valueError };
 
-        if (itemToAdd.additional.length !== 0 && item?.additionals?.length !== undefined && item.additionals.length > 0) {
+        if (itemToAdd.additional.length === 0 && item?.additionals?.length !== undefined && item.additionals.length > 0) {
             newValueError.additionalError = ERROR_INVALID_VALUE;
             isValid = false;
         } else {
@@ -56,14 +56,14 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
             newValueError.additionalSauceError = '';
         }
 
-        if (itemToAdd.additionalDrink.length !== 0 && item?.additionals_drinks?.length !== undefined && item.additionals_drinks.length > 0) {
+        if (itemToAdd.additionalDrink.length === 0 && item?.additionals_drinks?.length !== undefined && item.additionals_drinks.length > 0) {
             newValueError.additionalDrinkError = ERROR_INVALID_VALUE;
             isValid = false;
         } else {
             newValueError.additionalDrinkError = '';
         }
 
-        if (itemToAdd.additionalSweet.length !== 0 && item?.additionals_sweets?.length !== undefined && item.additionals_sweets.length > 0) {
+        if (itemToAdd.additionalSweet.length === 0 && item?.additionals_sweets?.length !== undefined && item.additionals_sweets.length > 0) {
             newValueError.additionalSweetError = ERROR_INVALID_VALUE;
             isValid = false;
         } else {
@@ -211,9 +211,13 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         options={item.additionals.map((option: any) => option.additionalItem.name)}
                                         value={itemToAdd.additional[index] || ''}
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um acompanhamento' : `Escolha o ${index + 1}º acompanhamento`}
-                                        onChange={(value) => updateItem('additional', { ...itemToAdd.additional, [index]: value })}
+                                        onChange={(value) => {
+                                            updateItem('additional', { ...itemToAdd.additional, [index]: value })
+                                            setValueError({ ...valueError, additionalError: '' })
+                                        }}
                                         marginTop='8px'
                                         errorLabel={valueError.additionalError}
+                                        removePlaceholderOption
                                     />
                                 )}
                                 {item.additionals_sauces && item.additionals_sauces.length > 0 && (
@@ -221,9 +225,13 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         options={item.additionals_sauces.map((option: any) => option.additionalItem.name)}
                                         value={itemToAdd.additionalSauce[index] || ''}
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um molho' : `Escolha o ${index + 1}º molho`}
-                                        onChange={(value) => updateItem('additionalSauce', { ...itemToAdd.additionalSauce, [index]: value })}
+                                        onChange={(value) => {
+                                            updateItem('additionalSauce', { ...itemToAdd.additionalSauce, [index]: value })
+                                            setValueError({ ...valueError, additionalSauceError: '' })
+                                        }}
                                         marginTop='8px'
                                         errorLabel={valueError.additionalSauceError}
+                                        removePlaceholderOption
                                     />
                                 )}
                                 {item.additionals_drinks && item.additionals_drinks.length > 0 && (
@@ -231,9 +239,13 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         options={item.additionals_drinks.map((option: any) => option.additionalItem.name)}
                                         value={itemToAdd.additionalDrink[index] || ''}
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha uma bebida' : `Escolha a ${index + 1}ª bebida`}
-                                        onChange={(value) => updateItem('additionalDrink', { ...itemToAdd.additionalDrink, [index]: value })}
+                                        onChange={(value) => {
+                                            updateItem('additionalDrink', { ...itemToAdd.additionalDrink, [index]: value })
+                                            setValueError({ ...valueError, additionalDrinkError: '' })
+                                        }}
                                         marginTop='8px'
                                         errorLabel={valueError.additionalDrinkError}
+                                        removePlaceholderOption
                                     />
                                 )}
                                 {item.additionals_sweets && item.additionals_sweets.length > 0 && (
@@ -241,9 +253,13 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         options={item.additionals_sweets.map((option: any) => option.additionalItem.name)}
                                         value={itemToAdd.additionalSweet[index] || ''}
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um doce' : `Escolha a ${index + 1}ª sobremesa`}
-                                        onChange={(value) => updateItem('additionalSweet', { ...itemToAdd.additionalSweet, [index]: value })}
+                                        onChange={(value) => {
+                                            updateItem('additionalSweet', { ...itemToAdd.additionalSweet, [index]: value })
+                                            setValueError({ ...valueError, additionalSweetError: '' })
+                                        }}
                                         marginTop='8px'
                                         errorLabel={valueError.additionalSweetError}
+                                        removePlaceholderOption
                                     />
                                 )}
                             </Fragment>

@@ -11,8 +11,9 @@ type ItemCardType = {
 
 export default function ItemCard({ item, onClick }: ItemCardType) {
     const truncateDescription = (description: string) => {
-        if (description.length > 10) {
-            return `${description.substring(0, 30)}...`;
+        const charLimitDescription = 30
+        if (description.length > charLimitDescription) {
+            return `${description.substring(0, charLimitDescription)}...`;
         }
         return description;
     };
