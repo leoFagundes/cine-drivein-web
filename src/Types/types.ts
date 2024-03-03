@@ -57,5 +57,9 @@ export type Order = {
 
 export type ItemInOrder = {
   item: Item;
-  observation?: String;
+  observation?: string;
+  additional?: string;
+  additional_sauce?: string;
+  additional_drink?: string;
+  additional_sweet?: string;
 };

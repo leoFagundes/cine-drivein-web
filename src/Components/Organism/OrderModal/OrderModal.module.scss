@@ -1,0 +1,15 @@
+@import "../../../Global.scss";
+
+.container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  background-color: $background-color;
+
+  .closeModal {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+}

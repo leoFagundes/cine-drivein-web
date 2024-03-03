@@ -3,7 +3,7 @@
 .container {
   display: flex;
   width: calc(100% - 16px);
-  height: 130px;
+  height: 70px;
   background-color: $main-white;
   padding: 8px;
   box-shadow: 0 0 10px black;
@@ -20,8 +20,8 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 130px;
-    min-width: 130px;
+    width: 70px;
+    min-width: 70px;
     border-radius: 5px;
     border: 1px solid $placeholder-color;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
@@ -29,6 +29,7 @@
     & > div {
       height: 100%;
       width: 100%;
+      border-radius: 5px;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: (50%, 50%);
@@ -50,7 +51,7 @@
   }
 
   label {
-    color: black;
+    color: rgb(0, 0, 0);
     text-align: left;
   }
 

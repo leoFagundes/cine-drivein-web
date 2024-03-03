@@ -10,9 +10,10 @@ type InputType = {
     errorLabel?: string;
     type?: string;
     marginTop?: string;
+    marginBottom?: string;
     caption?: ReactNode;
 }
-export const Input = ({ value, placeholder, onChange, errorLabel, type, marginTop, caption }: InputType) => {
+export const Input = ({ value, placeholder, onChange, errorLabel, type, marginTop, marginBottom, caption }: InputType) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
     const handlePassword = () => {
@@ -23,7 +24,7 @@ export const Input = ({ value, placeholder, onChange, errorLabel, type, marginTo
     const IS_PASSWORD_VISIBLE_ICON = isPasswordVisible ? faEye : faEyeSlash;
     const IS_PASSWORD_VISIBLE_TYPE = isPasswordVisible ? undefined : type;
     return (
-        <div style={{ marginTop: marginTop }} className={styles.container}>
+        <div style={{ marginTop: marginTop, marginBottom: marginBottom }} className={styles.container}>
             <input type={IS_PASSWORD_VISIBLE_TYPE} value={value} placeholder={placeholder} onChange={onChange} className={IS_ERROR_INPUT_STYLE} />
             {type === 'password' &&
                 <div aria-label='icone de olho' onClick={handlePassword} className={styles.icon}>

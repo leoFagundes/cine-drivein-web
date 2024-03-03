@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Text from '../../Atoms/Text'
 import styles from './OrderTemplate.module.scss'
 import ItemRepositories from '../../../Services/repositories/ItemRepositories';
@@ -8,6 +8,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { LoadingFullScreenTemplate } from '../LoadingFullScreenTemplate';
+import ItemModal from '../../Organism/ItemModal';
+import OrderModal from '../../Organism/OrderModal';
+import Alert from '../../Molecules/Alert';
 
 type OrderTemplateType = {
     label: string
@@ -20,35 +23,61 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     const [uniqueTypes, setUniqueTypes] = useState<string[]>([]);
     const [currentMenuType, setCurrentMenuType] = useState(ALL_TYPES_LABEL)
     const [isLoading, setIsLoading] = useState(false)
-    const [order, setOrder] = useState<Order>({
-        username: "",
-        phone: "",
-        spot: 0,
-        money_payment: 0,
-        credit_payment: 0,
-        debit_payment: 0,
-        service_fee: 0,
-        total_value: 0,
-        items:
-            [
-                // {
-                //     item: {
-                //         cod_item: "teste",
-                //         name: "teste",
-                //         type: "teste",
-                //         description: "Delicious Hot Dog with special sauce",
-                //         value: 15.0,
-                //         quantity: 1,
-                //         photo: "https://example.com/hamburguer.jpg",
-                //         additionals_sauces: [{ additionalItem: "65a04ba4b6611f7ff12f5393" }]
-                //     },
-                //     observation: 'Teste'
-                // },
-            ]
+    const [isItemModalOpen, setIsItemModalOpen] = useState(false)
+    const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
+    const [itemClicked, setItemClicked] = useState<Item | null>(null)
+    const [alertInfo, setAlertInfo] = useState<{ isOpen: boolean, message: string, type: string }>({
+        isOpen: false,
+        message: "",
+        type: ""
+    });
+    const [order, setOrder] = useState<Order>(() => {
+        const storedOrder = localStorage.getItem('order');
+        return storedOrder ? JSON.parse(storedOrder) : {
+            username: "",
+            phone: "",
+            spot: 0,
+            money_payment: 0,
+            credit_payment: 0,
+            debit_payment: 0,
+            service_fee: 0,
+            total_value: 0,
+            items: []
+        };
     });
     const location = useLocation();
     const navigate = useNavigate();
+    const menuTypesRef = useRef<HTMLDivElement>(null);
 
+    // useEffect(() => {
+    //     setOrder({
+    //         username: "",
+    //         phone: "",
+    //         spot: 0,
+    //         money_payment: 0,
+    //         credit_payment: 0,
+    //         debit_payment: 0,
+    //         service_fee: 0,
+    //         total_value: 0,
+    //         items: []
+    //     })
+    // }, [])
+
+    const showAlert = (message: string, type: string) => {
+        setAlertInfo({
+            isOpen: true,
+            message: message,
+            type: type
+        });
+    };
+
+    const closeAlert = () => {
+        setAlertInfo({
+            isOpen: false,
+            message: "",
+            type: ""
+        });
+    };
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -69,7 +98,11 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
 
     }, [navigate, location.search]);
 
-    console.log(order)
+    useEffect(() => {
+        localStorage.setItem('order', JSON.stringify(order));
+        console.log(order)
+    }, [order])
+
 
     useEffect(() => {
         const fetchUniqueTypes = async () => {
@@ -89,13 +122,33 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         fetchUniqueTypes();
     }, []);
 
+    useEffect(() => {
+        if (currentMenuType && menuTypesRef.current) {
+            const currentTypeElement = menuTypesRef.current.querySelector(`.${styles.currentType}`) as HTMLElement | null;
+            const menuContainer = menuTypesRef.current;
+
+            if (currentTypeElement) {
+                const scrollLeft = currentTypeElement.offsetLeft - (menuContainer.offsetWidth - currentTypeElement.offsetWidth) / 2;
+                menuContainer.scrollTo({
+                    left: scrollLeft,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }, [currentMenuType]);
+
+    const openItemModalWith = (item: Item) => {
+        setItemClicked(item)
+        setIsItemModalOpen(true)
+    }
+
     const renderItemsByType = (type: string) => {
         return (
             <div className={styles.menuItemsByType} key={type}>
                 <Text fontWeight='semibold' fontSize='large'>{type}</Text>
                 {items?.filter(item => item.type === type).map((item, index) => (
                     <div key={index} className={styles.item}>
-                        <ItemCard onClick={() => console.log(item.name)} item={item} />
+                        <ItemCard onClick={() => openItemModalWith(item)} item={item} />
                     </div>
                 ))}
             </div>
@@ -113,14 +166,14 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
             >
                 {label}
             </Text>
-            <div className={styles.menuOrder}>
+            <div className={styles.menuOrder} onClick={() => setIsOrderModalOpen(true)}>
                 <FontAwesomeIcon size='xl' icon={faCartShopping} color='white' />
                 <Text fontSize='mediumSmall'>Pedido</Text>
                 <div className={`${styles.quantityNotification} ${order.items.length > 0 && styles.isVisible}`}>
                     <Text fontWeight='semibold' fontSize='small'>{order.items.length}</Text>
                 </div>
             </div>
-            <div className={styles.menuTypes}>
+            <div className={styles.menuTypes} ref={menuTypesRef}>
                 {uniqueTypes.map(type => (
                     <div
                         key={type}
@@ -138,6 +191,16 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
                 })}
                 {currentMenuType !== ALL_TYPES_LABEL && renderItemsByType(currentMenuType)}
             </div>
+            <ItemModal setOrder={setOrder} order={order} item={itemClicked ? itemClicked : null} isOpen={isItemModalOpen} onClose={() => setIsItemModalOpen(false)} showAlert={showAlert} />
+            <OrderModal order={order} isOpen={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} />
+            <Alert
+                isAlertOpen={alertInfo.isOpen}
+                setIsAlertOpen={closeAlert}
+                message={alertInfo.message}
+                alertDisplayTime={2000}
+                onClose={closeAlert}
+                type={alertInfo.type}
+            />
         </section>
     )
 }

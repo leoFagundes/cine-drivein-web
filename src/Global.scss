@@ -25,6 +25,10 @@ body {
   background-color: $background-color;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 * {
   font-family: "Montserrat", sans-serif;
   -webkit-tap-highlight-color: transparent;
