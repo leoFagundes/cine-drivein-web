@@ -1,0 +1,72 @@
+@import "../../../Global.scss";
+
+.container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  background-color: $background-color;
+  overflow-y: scroll;
+
+  .closeModal {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  .itemImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 165px;
+      width: 315px;
+      border-radius: 5px;
+      border: 1px solid $main-white;
+
+      .image {
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: (50%, 50%);
+        filter: saturate(120%) contrast(105%);
+      }
+    }
+  }
+
+  .itemInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 22px;
+    gap: 8px;
+    padding: 0 22px;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  .itemValue {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+}
