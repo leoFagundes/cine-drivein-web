@@ -35,7 +35,7 @@ export type Item = {
   value: number;
   quantity: number;
   photo: string;
-  isVisible: boolean;
+  isVisible?: boolean;
   additionals?: { additionalItem: string }[];
   additionals_sauces?: { additionalItem: string }[];
   additionals_drinks?: { additionalItem: string }[];
@@ -47,9 +47,19 @@ export type Order = {
   username: string;
   phone: string;
   spot: number;
+  money_payment: number;
   credit_payment: number;
   debit_payment: number;
   service_fee: number;
   total_value: number;
-  items: Item[];
+  items: ItemInOrder[];
+};
+
+export type ItemInOrder = {
+  item: Item;
+  observation?: string;
+  additional?: string;
+  additional_sauce?: string;
+  additional_drink?: string;
+  additional_sweet?: string;
 };

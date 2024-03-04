@@ -22,11 +22,16 @@ $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 body {
-  background-color: $background-secondary-color;
+  background-color: $background-color;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 * {
   font-family: "Montserrat", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .fontSizeSmall {

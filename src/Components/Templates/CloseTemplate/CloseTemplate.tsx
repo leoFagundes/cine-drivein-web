@@ -1,6 +1,6 @@
 import styles from './CloseTemplate.module.scss';
 import LogoImage from "../../Atoms/LogoImage";
-import {ReactElement, useState} from "react";
+import { ReactElement, useState } from "react";
 
 type CloseTemplateType = {
     children: ReactElement;
@@ -25,7 +25,7 @@ export const CloseTemplate = ({ children }: CloseTemplateType) => {
     return (
         <section className={styles.container}>
             <div className={styles.serviceClose}>
-                <LogoImage/>
+                <LogoImage marginTop='32px' />
                 {children}
                 <img
                     onClick={() => setRandomImage(getRandomDiceImageString())}
