@@ -19,59 +19,90 @@ type ItemModalType = {
 
 type KeyType = 'additional' | 'additionalSauce' | 'additionalDrink' | 'additionalSweet';
 
-const ERROR_INVALID_VALUE = 'Escolha um valor para o acompanhamento.'
+const ERROR_INVALID_VALUE = 'Escolha um item de acompanhamento.'
+const ERROR_INVALID_VALUE_ALERT = 'Existem acompanhamentos vazios.'
 
 export default function ItemModal({ item, onClose, isOpen, setOrder, order, showAlert }: ItemModalType) {
     const [valueError, setValueError] = useState({
-        additionalError: '',
-        additionalSauceError: '',
-        additionalDrinkError: '',
-        additionalSweetError: '',
+        additionalError: [''],
+        additionalSauceError: [''],
+        additionalDrinkError: [''],
+        additionalSweetError: [''],
     });
     const [itemToAdd, setItemToAdd] = useState({
         observation: '',
         quantity: 0,
-        additional: [],
-        additionalSauce: [],
-        additionalDrink: [],
-        additionalSweet: [],
+        additional: [''],
+        additionalSauce: [''],
+        additionalDrink: [''],
+        additionalSweet: [''],
     })
 
+    useEffect(() => {
+        const adjustedQuantity = isNaN(itemToAdd.quantity) || itemToAdd.quantity === 0 ? 1 : itemToAdd.quantity;
+
+        setValueError(prevValueError => ({
+            additionalError: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalSauceError: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalDrinkError: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalSweetError: Array.from({ length: adjustedQuantity }, () => '')
+        }));
+
+        setItemToAdd(prevItemToAdd => ({
+            ...prevItemToAdd,
+            additional: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalSauce: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalDrink: Array.from({ length: adjustedQuantity }, () => ''),
+            additionalSweet: Array.from({ length: adjustedQuantity }, () => '')
+        }));
+    }, [itemToAdd.quantity]);
 
     const validateSubitemForm = () => {
-        let isValid = true;
+        let isValid: boolean[] = [];
         const newValueError = { ...valueError };
 
-        if (itemToAdd.additional.length === 0 && item?.additionals?.length !== undefined && item.additionals.length > 0) {
-            newValueError.additionalError = ERROR_INVALID_VALUE;
-            isValid = false;
-        } else {
-            newValueError.additionalError = '';
-        }
+        [...Array(Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1))].forEach((_, index) => {
+            if (itemToAdd.additional[index] === '' && item?.additionals?.length !== undefined && item.additionals.length > 0) {
+                newValueError.additionalError[index] = ERROR_INVALID_VALUE;
+                isValid.push(false);
+            } else {
+                newValueError.additionalError[index] = '';
+                isValid.push(true);
+            }
+        });
 
-        if (itemToAdd.additionalSauce.length === 0 && item?.additionals_sauces?.length !== undefined && item.additionals_sauces.length > 0) {
-            newValueError.additionalSauceError = ERROR_INVALID_VALUE;
-            isValid = false;
-        } else {
-            newValueError.additionalSauceError = '';
-        }
+        [...Array(Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1))].forEach((_, index) => {
+            if (itemToAdd.additionalSauce[index] === '' && item?.additionals_sauces?.length !== undefined && item.additionals_sauces.length > 0) {
+                newValueError.additionalSauceError[index] = ERROR_INVALID_VALUE;
+                isValid.push(false);
+            } else {
+                newValueError.additionalSauceError[index] = '';
+                isValid.push(true);
+            }
+        });
 
-        if (itemToAdd.additionalDrink.length === 0 && item?.additionals_drinks?.length !== undefined && item.additionals_drinks.length > 0) {
-            newValueError.additionalDrinkError = ERROR_INVALID_VALUE;
-            isValid = false;
-        } else {
-            newValueError.additionalDrinkError = '';
-        }
+        [...Array(Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1))].forEach((_, index) => {
+            if (itemToAdd.additionalDrink[index] === '' && item?.additionals_drinks?.length !== undefined && item.additionals_drinks.length > 0) {
+                newValueError.additionalDrinkError[index] = ERROR_INVALID_VALUE;
+                isValid.push(false);
+            } else {
+                newValueError.additionalDrinkError[index] = '';
+                isValid.push(true);
+            }
+        });
 
-        if (itemToAdd.additionalSweet.length === 0 && item?.additionals_sweets?.length !== undefined && item.additionals_sweets.length > 0) {
-            newValueError.additionalSweetError = ERROR_INVALID_VALUE;
-            isValid = false;
-        } else {
-            newValueError.additionalSweetError = '';
-        }
+        [...Array(Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1))].forEach((_, index) => {
+            if (itemToAdd.additionalSweet[index] === '' && item?.additionals_sweets?.length !== undefined && item.additionals_sweets.length > 0) {
+                newValueError.additionalSweetError[index] = ERROR_INVALID_VALUE;
+                isValid.push(false);
+            } else {
+                newValueError.additionalSweetError[index] = '';
+                isValid.push(true);
+            }
+        });
 
         setValueError(newValueError);
-        return isValid;
+        return !isValid.includes(false);
     };
 
     const updateItem = (key: KeyType, value: string | string[]) => {
@@ -91,17 +122,9 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
 
     const handleConfirmClick = () => {
         if (!validateSubitemForm()) {
+            showAlert(ERROR_INVALID_VALUE_ALERT, "danger")
             console.log('Formulário Inválido.')
             return
-        }
-
-        if (item) {
-            if (isNaN(itemToAdd.quantity) || item.quantity < 1) {
-                setItemToAdd({
-                    ...itemToAdd,
-                    quantity: 1
-                })
-            }
         }
 
         const updatedItems = [...order.items];
@@ -131,17 +154,17 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
         setItemToAdd({
             observation: '',
             quantity: 0,
-            additional: [],
-            additionalSauce: [],
-            additionalDrink: [],
-            additionalSweet: [],
+            additional: [''],
+            additionalSauce: [''],
+            additionalDrink: [''],
+            additionalSweet: [''],
         });
 
         setValueError({
-            additionalError: '',
-            additionalSauceError: '',
-            additionalDrinkError: '',
-            additionalSweetError: '',
+            additionalError: [''],
+            additionalSauceError: [''],
+            additionalDrinkError: [''],
+            additionalSweetError: [''],
         })
 
         onClose();
@@ -152,17 +175,17 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
         setItemToAdd({
             observation: '',
             quantity: 0,
-            additional: [],
-            additionalSauce: [],
-            additionalDrink: [],
-            additionalSweet: [],
+            additional: [''],
+            additionalSauce: [''],
+            additionalDrink: [''],
+            additionalSweet: [''],
         })
 
         setValueError({
-            additionalError: '',
-            additionalSauceError: '',
-            additionalDrinkError: '',
-            additionalSweetError: '',
+            additionalError: [''],
+            additionalSauceError: [''],
+            additionalDrinkError: [''],
+            additionalSweetError: [''],
         })
 
         onClose()
@@ -205,7 +228,12 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
 
                         {[...Array(Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1))].map((_, index) => (
                             <Fragment key={index}>
-                                {index > 0 && <br></br>}
+                                {index > 0 && (
+                                    (item && item.additionals && item.additionals.length > 0) ||
+                                    (item && item.additionals_sauces && item.additionals_sauces.length > 0) ||
+                                    (item && item.additionals_drinks && item.additionals_drinks.length > 0) ||
+                                    (item && item.additionals_sweets && item.additionals_sweets.length > 0)
+                                ) && <br></br>}
                                 {item.additionals && item.additionals.length > 0 && (
                                     <Dropdown
                                         options={item.additionals.map((option: any) => option.additionalItem.name)}
@@ -213,10 +241,16 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um acompanhamento' : `Escolha o ${index + 1}º acompanhamento`}
                                         onChange={(value) => {
                                             updateItem('additional', { ...itemToAdd.additional, [index]: value })
-                                            setValueError({ ...valueError, additionalError: '' })
+                                            setValueError((prevValueError) => ({
+                                                ...prevValueError,
+                                                additionalError: {
+                                                    ...prevValueError.additionalError,
+                                                    [index]: ''
+                                                }
+                                            }));
                                         }}
                                         marginTop='8px'
-                                        errorLabel={valueError.additionalError}
+                                        errorLabel={valueError.additionalError[index]}
                                         removePlaceholderOption
                                     />
                                 )}
@@ -227,10 +261,16 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um molho' : `Escolha o ${index + 1}º molho`}
                                         onChange={(value) => {
                                             updateItem('additionalSauce', { ...itemToAdd.additionalSauce, [index]: value })
-                                            setValueError({ ...valueError, additionalSauceError: '' })
+                                            setValueError((prevValueError) => ({
+                                                ...prevValueError,
+                                                additionalSauceError: {
+                                                    ...prevValueError.additionalSauceError,
+                                                    [index]: ''
+                                                }
+                                            }));
                                         }}
                                         marginTop='8px'
-                                        errorLabel={valueError.additionalSauceError}
+                                        errorLabel={valueError.additionalSauceError[index]}
                                         removePlaceholderOption
                                     />
                                 )}
@@ -241,10 +281,16 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha uma bebida' : `Escolha a ${index + 1}ª bebida`}
                                         onChange={(value) => {
                                             updateItem('additionalDrink', { ...itemToAdd.additionalDrink, [index]: value })
-                                            setValueError({ ...valueError, additionalDrinkError: '' })
+                                            setValueError((prevValueError) => ({
+                                                ...prevValueError,
+                                                additionalDrinkError: {
+                                                    ...prevValueError.additionalDrinkError,
+                                                    [index]: ''
+                                                }
+                                            }));
                                         }}
                                         marginTop='8px'
-                                        errorLabel={valueError.additionalDrinkError}
+                                        errorLabel={valueError.additionalDrinkError[index]}
                                         removePlaceholderOption
                                     />
                                 )}
@@ -255,10 +301,16 @@ export default function ItemModal({ item, onClose, isOpen, setOrder, order, show
                                         placeholder={itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity) ? 'Escolha um doce' : `Escolha a ${index + 1}ª sobremesa`}
                                         onChange={(value) => {
                                             updateItem('additionalSweet', { ...itemToAdd.additionalSweet, [index]: value })
-                                            setValueError({ ...valueError, additionalSweetError: '' })
+                                            setValueError((prevValueError) => ({
+                                                ...prevValueError,
+                                                additionalSweetError: {
+                                                    ...prevValueError.additionalSweetError,
+                                                    [index]: ''
+                                                }
+                                            }));
                                         }}
                                         marginTop='8px'
-                                        errorLabel={valueError.additionalSweetError}
+                                        errorLabel={valueError.additionalSweetError[index]}
                                         removePlaceholderOption
                                     />
                                 )}

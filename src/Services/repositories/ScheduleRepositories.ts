@@ -5,7 +5,6 @@ class ScheduleRepositories {
   static async getSchedule() {
     try {
       const response = await api.get("/schedule");
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao localizar horários:", error);
