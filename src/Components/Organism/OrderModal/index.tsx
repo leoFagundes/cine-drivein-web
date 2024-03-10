@@ -81,14 +81,6 @@ export default function OrderModal({
     return () => window.removeEventListener("popstate", handlePopstate);
   }, [isOpen]);
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  }, [isOpen]);
-
   const openWhatsApp = () => {
     const formattedNumber = "+55 (61) 99961-9114";
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedNumber}`;
