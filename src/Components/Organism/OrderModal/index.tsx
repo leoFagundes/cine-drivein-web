@@ -65,6 +65,25 @@ export default function OrderModal({
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("modal-open");
+      window.history.pushState({ modalOpen: true }, "");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+
+    const handlePopstate = (event: PopStateEvent) => {
+      if (event.state) {
+        onClose();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => window.removeEventListener("popstate", handlePopstate);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
     }
