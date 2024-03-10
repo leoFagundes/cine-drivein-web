@@ -44,6 +44,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
           phone: "",
           spot: 0,
           money_payment: 0,
+          status: "active",
           credit_payment: 0,
           debit_payment: 0,
           service_fee: 0,

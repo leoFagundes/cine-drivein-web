@@ -167,6 +167,7 @@ export default function OrderModal({
           username: "",
           phone: "",
           spot: 0,
+          status: "active",
           money_payment: 0,
           credit_payment: 0,
           debit_payment: 0,

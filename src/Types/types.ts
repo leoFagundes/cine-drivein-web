@@ -47,6 +47,7 @@ export type Order = {
   username: string;
   phone: string;
   spot: number;
+  status: "active" | "finished" | "canceled";
   money_payment: number;
   credit_payment: number;
   debit_payment: number;
