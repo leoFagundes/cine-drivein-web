@@ -11,6 +11,7 @@ import { LoadingFullScreenTemplate } from "../LoadingFullScreenTemplate";
 import ItemModal from "../../Organism/ItemModal";
 import OrderModal from "../../Organism/OrderModal";
 import Alert from "../../Molecules/Alert";
+import FloatingButton from "../../Atoms/FloatingButton";
 
 type OrderTemplateType = {
   label: string;
@@ -271,6 +272,19 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         alertDisplayTime={2000}
         onClose={closeAlert}
         type={alertInfo.type}
+      />
+      <FloatingButton
+        scrollUp
+        icon={
+          <FontAwesomeIcon
+            className={styles.icon}
+            size="sm"
+            icon={faCartShopping}
+            color="white"
+          />
+        }
+        label="Finalizar pedido"
+        onClick={() => setIsOrderModalOpen(true)}
       />
     </section>
   );

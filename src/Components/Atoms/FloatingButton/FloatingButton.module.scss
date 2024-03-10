@@ -2,29 +2,36 @@
 
 .container {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   position: fixed;
   transition: opacity 0.3s ease-in-out;
   bottom: 8px;
   right: 8px;
+  gap: 4px;
 
   & > div {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
-    width: 35px;
-    height: 35px;
-    z-index: 2;
-    border-radius: 50px;
-    background-color: $background-color;
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      z-index: 2;
+      border-radius: 50px;
+      background-color: $background-color;
+    }
   }
 
   label {
     padding: 4px 6px;
     border-radius: 5px;
     background-color: $background-color;
+    flex: 1;
   }
 
   &.isInvisible {

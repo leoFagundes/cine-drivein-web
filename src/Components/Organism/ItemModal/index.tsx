@@ -169,14 +169,6 @@ export default function ItemModal({
     }));
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  }, [isOpen]);
-
   const handleConfirmClick = () => {
     if (!validateSubitemForm()) {
       showAlert(ERROR_INVALID_VALUE_ALERT, "danger");
