@@ -264,6 +264,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         setOrder={setOrder}
         isOpen={isOrderModalOpen}
         onClose={() => setIsOrderModalOpen(false)}
+        setIsLoading={setIsLoading}
       />
       <Alert
         isAlertOpen={alertInfo.isOpen}

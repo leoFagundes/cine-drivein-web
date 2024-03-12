@@ -52,6 +52,7 @@ type OrderModalType = {
   setOrder: React.Dispatch<React.SetStateAction<Order>>;
   isOpen: boolean;
   onClose: VoidFunction;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function OrderModal({
@@ -59,6 +60,7 @@ export default function OrderModal({
   setOrder,
   onClose,
   isOpen,
+  setIsLoading,
 }: OrderModalType) {
   const navigate = useNavigate();
 
@@ -171,6 +173,7 @@ export default function OrderModal({
       if (order.items.length === 0) {
         return;
       }
+      setIsLoading(true);
       try {
         await OrderRepositories.createOrder(order);
         console.log("Pedido criado com sucesso");
@@ -190,6 +193,7 @@ export default function OrderModal({
         navigate("/", { state: { from: "201:OrderCreated" } });
       } catch (error) {
         console.error("Erro ao criar pedido:", error);
+        setIsLoading(false);
       }
     }
   };
