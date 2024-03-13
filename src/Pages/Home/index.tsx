@@ -13,6 +13,7 @@ import styles from "../../Components/Organism/Modal/Modal.module.scss";
 import Text from "../../Components/Atoms/Text";
 import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "../../Components/Molecules/Alert";
+import { Schedule } from "../../Types/types";
 
 const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
@@ -22,10 +23,10 @@ const ERROR_SPOT_MESSAGE2 = "Sua vaga são 3 ou 4 dígitos";
 const ORDER_CREATED_SUCCESSFULLY = "Pedido enviado com sucesso";
 
 export default function Home() {
-  const [scheduleInformation, setScheduleInformation] = useState({
+  const [scheduleInformation, setScheduleInformation] = useState<Schedule>({
     openingTime: "",
     closingTime: "",
-    isServiceOpen: false,
+    isOpen: false,
   });
   const [nameError, setNameError] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
@@ -91,7 +92,7 @@ export default function Home() {
         const data = await ScheduleRepositories.getSchedule();
 
         setScheduleInformation({
-          isServiceOpen: data.isOpen,
+          isOpen: data.isOpen,
           closingTime: data.closingTime,
           openingTime: data.openingTime,
         });
@@ -186,6 +187,10 @@ export default function Home() {
   };
 
   const handleSubmit = () => {
+    if (!scheduleInformation.isOpen) {
+      return window.location.reload;
+    }
+
     if (!validateForm()) {
       console.log("Formulário Inválido.");
       return;
@@ -203,7 +208,7 @@ export default function Home() {
 
   if (isLoading) return <LoadingFullScreenTemplate />;
 
-  if (scheduleInformation.isServiceOpen) {
+  if (scheduleInformation.isOpen) {
     const PARKING_CAPTION_COMPONENT = (
       <Caption
         onClick={() => setIsParkinModalOpen(true)}
@@ -297,7 +302,7 @@ export default function Home() {
   }
 
   return (
-    <CloseTemplate>
+    <CloseTemplate linkWhatsapp={openWhatsApp}>
       <div className={style.infoSchedule}>
         <h3>Estamos Fechados</h3>
         <p>Horário de Funcionamento da Lanchonete:</p>

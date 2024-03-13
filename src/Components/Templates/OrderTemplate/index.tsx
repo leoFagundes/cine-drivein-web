@@ -12,6 +12,7 @@ import ItemModal from "../../Organism/ItemModal";
 import OrderModal from "../../Organism/OrderModal";
 import Alert from "../../Molecules/Alert";
 import FloatingButton from "../../Atoms/FloatingButton";
+import ScheduleRepositories from "../../../Services/repositories/ScheduleRepositories";
 
 type OrderTemplateType = {
   label: string;
@@ -27,6 +28,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
   const [isItemModalOpen, setIsItemModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [itemClicked, setItemClicked] = useState<Item | null>(null);
+  const [reloadRequired, setReloadRequired] = useState(false);
   const [alertInfo, setAlertInfo] = useState<{
     isOpen: boolean;
     message: string;
@@ -57,19 +59,32 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
   const navigate = useNavigate();
   const menuTypesRef = useRef<HTMLDivElement>(null);
 
-  //   useEffect(() => {
-  //     setOrder({
-  //       username: "",
-  //       phone: "",
-  //       spot: 0,
-  //       money_payment: 0,
-  //       credit_payment: 0,
-  //       debit_payment: 0,
-  //       service_fee: 0,
-  //       total_value: 0,
-  //       items: [],
-  //     });
-  //   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Buscando status de abertura...");
+        const data = await ScheduleRepositories.getSchedule();
+        if (!data.isOpen) {
+          setReloadRequired(true);
+        }
+      } catch (error) {
+        console.error(
+          "Erro ao obter dados do horário de funcionamento:",
+          error
+        );
+      }
+    };
+
+    const interval = setInterval(fetchData, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (reloadRequired) {
+      navigate("/");
+    }
+  }, [reloadRequired]);
 
   useEffect(() => {
     if (order && order.items) {
@@ -121,7 +136,6 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
 
   useEffect(() => {
     localStorage.setItem("order", JSON.stringify(order));
-    console.log(order);
   }, [order]);
 
   useEffect(() => {
