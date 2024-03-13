@@ -90,7 +90,6 @@ export default function Home() {
       setIsLoading(true);
       try {
         const data = await ScheduleRepositories.getSchedule();
-
         setScheduleInformation({
           isOpen: data.isOpen,
           closingTime: data.closingTime,
@@ -107,6 +106,28 @@ export default function Home() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Buscando status de abertura...");
+        const data = await ScheduleRepositories.getSchedule();
+        if (scheduleInformation.isOpen !== data.isOpen) {
+          console.log(scheduleInformation.isOpen, data.isOpen);
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error(
+          "Erro ao obter dados do horário de funcionamento:",
+          error
+        );
+      }
+    };
+
+    const interval = setInterval(fetchData, 10000);
+
+    return () => clearInterval(interval);
+  }, [scheduleInformation]);
 
   const handleNameWith = (value: string) => {
     setName(value);
