@@ -442,7 +442,7 @@ export default function ItemModal({
             />
             <Button
               onClick={() => handleConfirmClick()}
-              label="Adicionar item ao pedido"
+              label="Adicionar este item ao pedido"
             />
           </div>
         </div>
