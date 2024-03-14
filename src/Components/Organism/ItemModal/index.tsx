@@ -276,7 +276,7 @@ export default function ItemModal({
               value={
                 itemToAdd.quantity !== 0 ? itemToAdd.quantity.toString() : ""
               }
-              placeholder="Quantidade"
+              placeholder="Quantidade deste item (padrão: 1)"
               onChange={(e) =>
                 setItemToAdd({
                   ...itemToAdd,
