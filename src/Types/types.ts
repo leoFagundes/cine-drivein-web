@@ -24,6 +24,7 @@ export type AdditionalItem = {
   name: string;
   description: string;
   photo: string;
+  isVisible?: boolean;
 };
 
 export type Item = {

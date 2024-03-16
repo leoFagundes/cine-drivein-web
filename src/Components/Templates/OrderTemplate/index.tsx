@@ -176,6 +176,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
   }, [currentMenuType]);
 
   const openItemModalWith = (item: Item) => {
+    console.log(item);
     setItemClicked(item);
     setIsItemModalOpen(true);
   };
