@@ -14,6 +14,7 @@ import Text from "../../Components/Atoms/Text";
 import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "../../Components/Molecules/Alert";
 import { Schedule } from "../../Types/types";
+import FeedbackModal from "../../Components/Organism/FeedbackModal";
 
 const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
@@ -36,6 +37,7 @@ export default function Home() {
   const [spot, setSpot] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isParkingModalOpen, setIsParkinModalOpen] = useState(false);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [alertInfo, setAlertInfo] = useState<{
     isOpen: boolean;
     message: string;
@@ -81,6 +83,7 @@ export default function Home() {
   useEffect(() => {
     if (from === "201:OrderCreated") {
       showAlert(ORDER_CREATED_SUCCESSFULLY, "success");
+      setIsFeedbackModalOpen(true);
       navigate("/", { replace: true });
     }
   }, [from, navigate]);
@@ -265,6 +268,11 @@ export default function Home() {
 
     return (
       <>
+        <FeedbackModal
+          isOpen={isFeedbackModalOpen}
+          onClose={() => setIsFeedbackModalOpen(false)}
+          linkWhatsapp={openWhatsApp}
+        />
         <FormTemplate
           label="Para fazer seu pedido, preencha os campos abaixo"
           inputs={[
@@ -305,7 +313,7 @@ export default function Home() {
               isAlertOpen={alertInfo.isOpen}
               setIsAlertOpen={closeAlert}
               message={alertInfo.message}
-              alertDisplayTime={5000}
+              alertDisplayTime={3000}
               onClose={closeAlert}
               type={alertInfo.type}
             />

@@ -53,6 +53,7 @@ type OrderModalType = {
   isOpen: boolean;
   onClose: VoidFunction;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  showAlert: (message: string, type: string) => void;
 };
 
 export default function OrderModal({
@@ -61,6 +62,7 @@ export default function OrderModal({
   onClose,
   isOpen,
   setIsLoading,
+  showAlert,
 }: OrderModalType) {
   const navigate = useNavigate();
 
@@ -194,6 +196,8 @@ export default function OrderModal({
       } catch (error) {
         console.error("Erro ao criar pedido:", error);
         setIsLoading(false);
+        showAlert &&
+          showAlert("Não foi possível finalizar o pedido.", "danger");
       }
     }
   };

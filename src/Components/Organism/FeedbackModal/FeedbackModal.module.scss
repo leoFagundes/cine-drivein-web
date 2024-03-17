@@ -1,0 +1,28 @@
+@import "../../../Global.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  background-color: $background-color;
+  overflow-y: scroll;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 450px;
+    width: 85%;
+
+    .randomImage {
+      height: 230px;
+      border-radius: 15px;
+      margin-top: 22px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+  }
+}

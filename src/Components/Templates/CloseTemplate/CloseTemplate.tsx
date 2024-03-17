@@ -4,7 +4,6 @@ import { ReactElement, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Caption from "../../Molecules/Caption";
-import Text from "../../Atoms/Text";
 
 type CloseTemplateType = {
   children: ReactElement;
