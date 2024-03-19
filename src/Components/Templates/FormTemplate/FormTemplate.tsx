@@ -42,9 +42,11 @@ export const FormTemplate = ({
   return (
     <section className={styles.container}>
       <LogoImage marginTop="32px" />
-      <Text marginTop="40px" fontSize="mediumLarge">
-        {label}
-      </Text>
+      <div className={styles.label}>
+        <Text fontSize="mediumLarge" fontAlign="center">
+          {label}
+        </Text>
+      </div>
       <div className={styles.inputs}>
         {inputs.map((item, index) => {
           return (

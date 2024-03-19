@@ -7,6 +7,13 @@
   width: 100%;
   color: $main-white;
 
+  .label {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    width: 90%;
+  }
+
   .inputs {
     display: flex;
     flex-direction: column;
