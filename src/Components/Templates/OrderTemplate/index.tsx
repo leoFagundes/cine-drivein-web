@@ -98,7 +98,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         total_value: totalValue,
       }));
     }
-  }, [order.items, order]);
+  }, [order.items]);
 
   const showAlert = (message: string, type: string) => {
     setAlertInfo({

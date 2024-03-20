@@ -192,6 +192,7 @@ export default function OrderModal({
           items: [],
         });
         localStorage.removeItem("order");
+        setIsLoading(false);
         navigate("/", { state: { from: "201:OrderCreated" } });
       } catch (error) {
         console.error("Erro ao criar pedido:", error);
