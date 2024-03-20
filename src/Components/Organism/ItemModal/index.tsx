@@ -59,7 +59,7 @@ export default function ItemModal({
 
     const handlePopstate = (event: PopStateEvent) => {
       if (event.state) {
-        onClose();
+        handleCloseClick();
       }
     };
 
@@ -243,7 +243,7 @@ export default function ItemModal({
   return (
     <>
       {isOpen && item && (
-        <div className={styles.container}>
+        <div className={`${styles.container}`}>
           <div className={styles.itemImage}>
             <div>
               {item.photo ? (
@@ -444,6 +444,14 @@ export default function ItemModal({
               onClick={() => handleConfirmClick()}
               label="Adicionar este item ao pedido"
             />
+          </div>
+          <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </div>
       )}

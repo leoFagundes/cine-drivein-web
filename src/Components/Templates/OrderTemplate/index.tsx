@@ -84,7 +84,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     if (reloadRequired) {
       navigate("/");
     }
-  }, [reloadRequired]);
+  }, [reloadRequired, navigate]);
 
   useEffect(() => {
     if (order && order.items) {
@@ -98,7 +98,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         total_value: totalValue,
       }));
     }
-  }, [order.items]);
+  }, [order.items, order]);
 
   const showAlert = (message: string, type: string) => {
     setAlertInfo({

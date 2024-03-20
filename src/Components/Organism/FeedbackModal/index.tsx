@@ -29,7 +29,7 @@ export default function FeedbackModal({
     } else {
       console.log('A variável "name" não está armazenada no localStorage.');
     }
-  }, [isOpen, setName]);
+  }, [isOpen, setName, name]);
 
   const getRandomDiceImageString = () => {
     const length = Math.floor(Math.random() * (8 - 4 + 1)) + 4;

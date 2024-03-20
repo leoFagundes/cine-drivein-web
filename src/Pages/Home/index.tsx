@@ -225,8 +225,8 @@ export default function Home() {
   };
 
   const openWhatsApp = () => {
-    const formattedNumber = "+55 (61) 99961-9114";
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedNumber}`;
+    const phoneNumber = "5561999619114";
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
 

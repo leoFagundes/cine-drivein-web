@@ -83,11 +83,11 @@ export default function OrderModal({
     window.addEventListener("popstate", handlePopstate);
 
     return () => window.removeEventListener("popstate", handlePopstate);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   const openWhatsApp = () => {
-    const formattedNumber = "+55 (61) 99961-9114";
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${formattedNumber}`;
+    const phoneNumber = "5561999619114";
+    const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
 
@@ -311,7 +311,7 @@ export default function OrderModal({
   return (
     <>
       {isOpen && order && (
-        <div className={styles.container}>
+        <div className={`${styles.container}`}>
           <Text marginTop="32px" fontSize="extraLarge" fontWeight="semibold">
             Meu Pedido
           </Text>
@@ -395,6 +395,14 @@ export default function OrderModal({
             label={"Precisa de ajuda?"}
           />
           <div className={styles.line} />
+          <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
         </div>
       )}
     </>
