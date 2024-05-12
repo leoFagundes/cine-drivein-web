@@ -342,6 +342,14 @@ export default function OrderModal({
               </Text>
             </div>
             <div className={styles.line} />
+            {order.items.length === 0 && (
+              <Text
+                fontColor="background-secondary-color"
+                fontSize="mediumLarge"
+              >
+                Nenhum item adicionado ao carrinho
+              </Text>
+            )}
             {order.items && renderOrderItems(groupOrderItems(order.items))}
             <div className={styles.line} />
             <div className={styles.orderValue}>
