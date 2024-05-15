@@ -8,6 +8,7 @@ type FloatinButtonType = {
   scrollUp?: boolean;
   icon?: ReactNode;
   label?: string;
+  quantity?: number;
   onClick?: VoidFunction;
 };
 
@@ -15,6 +16,7 @@ export default function FloatingButton({
   scrollUp = false,
   icon,
   label,
+  quantity,
   onClick,
 }: FloatinButtonType) {
   const [isVisible, setIsVisible] = useState(false);
@@ -47,15 +49,28 @@ export default function FloatingButton({
       className={`${styles.container} ${!isVisible ? styles.isInvisible : ""}`}
     >
       {label && icon && onClick && (
-        <div onClick={onClick}>
-          <div className={styles.icon}>{icon}</div>
+        <div className={styles.boxContent} onClick={onClick}>
+          <div className={styles.icon}>
+            {icon}
+            {quantity !== undefined && (
+              <div
+                className={`${styles.quantityNotification} ${
+                  quantity > 0 && styles.isVisible
+                }`}
+              >
+                <Text fontWeight="semibold" fontSize="extraSmall">
+                  {quantity}
+                </Text>
+              </div>
+            )}
+          </div>
           <Text>{label}</Text>
         </div>
       )}
       {scrollUp && (
-        <div onClick={scrollToTop}>
+        <div className={styles.boxContent} onClick={scrollToTop}>
           <div className={styles.icon}>
-            <FontAwesomeIcon size="xl" icon={faArrowUp} color="white" />
+            <FontAwesomeIcon size="lg" icon={faArrowUp} color="white" />
           </div>
           <Text>Voltar ao topo</Text>
         </div>

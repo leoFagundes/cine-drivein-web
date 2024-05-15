@@ -301,6 +301,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
           />
         }
         label="Finalizar pedido"
+        quantity={order.items.length}
         onClick={() => setIsOrderModalOpen(true)}
       />
     </section>

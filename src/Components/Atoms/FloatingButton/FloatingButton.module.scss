@@ -24,10 +24,29 @@
       z-index: 2;
       border-radius: 50px;
       background-color: $background-color;
+
+      .quantityNotification {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: $primary-color;
+        top: -6px;
+        right: -4px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+
+        &.isVisible {
+          opacity: 1;
+        }
+      }
     }
   }
 
-  label {
+  .boxContent > label {
     padding: 4px 6px;
     border-radius: 5px;
     background-color: $background-color;

@@ -224,6 +224,7 @@ export default function OrderModal({
                 fontWeight="semibold"
                 fontSize="medium"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 {groupedOrderItem.quantity}x {groupedOrderItem.item.name}
               </Text>

@@ -260,7 +260,9 @@ export default function ItemModal({
             <Text fontSize="extraLarge" fontWeight="bold">
               {item.name}
             </Text>
-            <Text fontSize="mediumSmall">{item.description}</Text>
+            <Text fontSize="mediumSmall" fontAlign="left">
+              {item.description}
+            </Text>
           </div>
           <div className={styles.inputs}>
             <Input
