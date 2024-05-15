@@ -11,7 +11,7 @@ type ItemCardType = {
 
 export default function ItemCard({ item, onClick }: ItemCardType) {
   const truncateDescription = (description: string) => {
-    const charLimitDescription = 20;
+    const charLimitDescription = 60;
     if (description.length > charLimitDescription) {
       return `${description.substring(0, charLimitDescription)}...`;
     }
@@ -28,17 +28,17 @@ export default function ItemCard({ item, onClick }: ItemCardType) {
         )}
       </div>
       <div className={styles.itemInfo}>
-        <Text fontWeight="semibold" fontSize="medium">
+        <Text fontWeight="semibold" fontSize="mediumSmall">
           {item.name}
         </Text>
-        <Text fontWeight="regular" fontSize="mediumSmall">
+        <Text fontWeight="regular" fontSize="small">
           {truncateDescription(item.description)}
         </Text>
         <span>
-          <Text fontWeight="semibold" fontSize="medium">
+          <Text fontWeight="semibold" fontSize="mediumSmall">
             Valor:
           </Text>
-          <Text fontWeight="regular" fontSize="medium">
+          <Text fontWeight="regular" fontSize="mediumSmall">
             R$ {item.value.toFixed(2)}
           </Text>
         </span>

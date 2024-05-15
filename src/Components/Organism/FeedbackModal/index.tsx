@@ -54,6 +54,9 @@ export default function FeedbackModal({
               Recebemos seu pedido{name && `, ${name},`} e já estamos nos
               preparando para colocar as mãos na massa!
             </Text>
+            <Text fontSize="small" fontWeight="regular" marginTop="4px">
+              Aguarde no carro que em breve um garçom irá entregar o seu pedido.
+            </Text>
             <img
               onClick={() => setRandomImage(getRandomDiceImageString())}
               src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${randomImage}`}
