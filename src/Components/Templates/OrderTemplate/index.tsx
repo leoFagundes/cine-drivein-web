@@ -304,6 +304,10 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         quantity={order.items.length}
         onClick={() => setIsOrderModalOpen(true)}
       />
+      <br />
+      <br />
+      <br />
+      <br />
     </section>
   );
 }
