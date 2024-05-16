@@ -245,7 +245,7 @@ export default function Home() {
       <>
         <img
           className={styles.modalImg}
-          src="https://i.ytimg.com/vi/J-ZKsCpTNPc/maxresdefault.jpg"
+          src="https://cine-drive-in.s3.amazonaws.com/ilustrative-spot-photo3.png"
           alt="Imagem da vaga"
         />
         <Text

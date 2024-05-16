@@ -264,6 +264,7 @@ export default function OrderModal({
                   fontWeight="medium"
                   fontSize="medium"
                   fontColor="background-secondary-color"
+                  fontAlign="left"
                 >
                   <strong>Adicional:</strong> {groupedOrderItem.additional}
                 </Text>
@@ -273,6 +274,7 @@ export default function OrderModal({
                   fontWeight="medium"
                   fontSize="medium"
                   fontColor="background-secondary-color"
+                  fontAlign="left"
                 >
                   <strong>Molho:</strong> {groupedOrderItem.additional_sauce}
                 </Text>
@@ -282,6 +284,7 @@ export default function OrderModal({
                   fontWeight="medium"
                   fontSize="medium"
                   fontColor="background-secondary-color"
+                  fontAlign="left"
                 >
                   <strong>Bebida:</strong> {groupedOrderItem.additional_drink}
                 </Text>
@@ -291,6 +294,7 @@ export default function OrderModal({
                   fontWeight="medium"
                   fontSize="medium"
                   fontColor="background-secondary-color"
+                  fontAlign="left"
                 >
                   <strong>Doce:</strong> {groupedOrderItem.additional_sweet}
                 </Text>
@@ -299,6 +303,7 @@ export default function OrderModal({
                 fontWeight="medium"
                 fontSize="medium"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Valor:</strong> R${" "}
                 {groupedOrderItem.totalValue.toFixed(2)}
@@ -326,18 +331,21 @@ export default function OrderModal({
                 fontSize="large"
                 fontWeight="semibold"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 Vaga {order.spot}
               </Text>
               <Text
                 fontSize="mediumLarge"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Nome:</strong> {order.username}
               </Text>
               <Text
                 fontSize="mediumLarge"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Telefone:</strong> {order.phone}
               </Text>
@@ -357,12 +365,14 @@ export default function OrderModal({
               <Text
                 fontSize="mediumLarge"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Valor:</strong> R$ {order.total_value.toFixed(2)}
               </Text>
               <Text
                 fontSize="mediumLarge"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Taxa de serviço:</strong> R${" "}
                 {order.service_fee.toFixed(2)}
@@ -370,6 +380,7 @@ export default function OrderModal({
               <Text
                 fontSize="mediumLarge"
                 fontColor="background-secondary-color"
+                fontAlign="left"
               >
                 <strong>Valor total:</strong> R${" "}
                 {(order.total_value + order.service_fee).toFixed(2)}
