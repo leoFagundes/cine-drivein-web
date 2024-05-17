@@ -13,8 +13,9 @@ import styles from "../../Components/Organism/Modal/Modal.module.scss";
 import Text from "../../Components/Atoms/Text";
 import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "../../Components/Molecules/Alert";
-import { Schedule } from "../../Types/types";
+import { Item, Schedule } from "../../Types/types";
 import FeedbackModal from "../../Components/Organism/FeedbackModal";
+import ItemRepositories from "../../Services/repositories/ItemRepositories";
 
 const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
@@ -67,9 +68,31 @@ export default function Home() {
     });
   };
 
+  function preloadImages(urls: string[]) {
+    urls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+  }
+
   useEffect(() => {
     const storedName = localStorage.getItem("name");
     const storedPhone = localStorage.getItem("phone");
+    const ilustrativeSpotImage =
+      "https://cine-drive-in.s3.amazonaws.com/ilustrative-spot-photo3.png";
+
+    const preloadItemImages = async () => {
+      try {
+        const items = await ItemRepositories.getItems();
+        const imagePhotos = items.map((item: Item) => item.photo);
+        imagePhotos.push(ilustrativeSpotImage);
+        preloadImages(imagePhotos);
+      } catch (error) {
+        console.error("Não foi possível pré-carregar as imagens!");
+      }
+    };
+
+    preloadItemImages();
 
     if (storedName) {
       setName(storedName);
