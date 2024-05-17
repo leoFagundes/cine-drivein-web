@@ -35,7 +35,13 @@
       label {
         position: absolute;
         text-shadow: 2px 2px 2px rgb(0, 0, 0);
+        opacity: 0.3;
       }
+    }
+
+    .infoAlertMessage {
+      display: flex;
+      max-width: 220px;
     }
   }
 }

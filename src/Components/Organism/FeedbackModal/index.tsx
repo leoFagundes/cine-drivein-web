@@ -71,9 +71,12 @@ export default function FeedbackModal({
                 </Text>
               )}
             </div>
-            <Text fontSize="small" fontWeight="regular" marginTop="6px">
-              Aguarde no carro que em breve um garçom irá entregar o seu pedido.
-            </Text>
+            <div className={styles.infoAlertMessage}>
+              <Text fontSize="small" fontWeight="regular" marginTop="6px">
+                Aguarde no carro que em breve um garçom irá entregar o seu
+                pedido.
+              </Text>
+            </div>
             <Button label="Voltar ao início" onClick={() => onClose()} />
             <Caption
               onClick={linkWhatsapp}
