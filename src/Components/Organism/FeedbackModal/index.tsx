@@ -19,6 +19,7 @@ export default function FeedbackModal({
   linkWhatsapp,
 }: FeedbackModalType) {
   const [randomImage, setRandomImage] = useState("Harley");
+  const [isTextImageVisible, setIsTextImageVisible] = useState(true);
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -54,12 +55,22 @@ export default function FeedbackModal({
               Recebemos seu pedido{name && `, ${name},`} e já estamos nos
               preparando para colocar as mãos na massa!
             </Text>
-            <img
-              onClick={() => setRandomImage(getRandomDiceImageString())}
-              src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${randomImage}`}
-              alt="avatar"
-              className={styles.randomImage}
-            />
+            <div className={styles.imageContent}>
+              <img
+                onClick={() => {
+                  setRandomImage(getRandomDiceImageString());
+                  setIsTextImageVisible(false);
+                }}
+                src={`https://api.dicebear.com/7.x/thumbs/svg?seed=${randomImage}`}
+                alt="avatar"
+                className={styles.randomImage}
+              />
+              {isTextImageVisible && (
+                <Text fontSize="extraSmall" fontWeight="medium">
+                  Clique em mim!
+                </Text>
+              )}
+            </div>
             <Text fontSize="small" fontWeight="regular" marginTop="6px">
               Aguarde no carro que em breve um garçom irá entregar o seu pedido.
             </Text>
