@@ -39,7 +39,7 @@ export default function RecentOrdersCard() {
     <section className={style.container}>
       {recentOrders.length > 0 && (
         <>
-          <Text fontWeight="semibold">Pedidos Recentes</Text>
+          <Text fontWeight="semibold">Últimos Pedidos</Text>
           <div className={style.content}>
             {recentOrders.map((order, index) => (
               <div key={index} className={style.recentOrderCards}>
@@ -48,7 +48,7 @@ export default function RecentOrdersCard() {
                 </Text>
                 <Text fontAlign="left" fontColor="background-secondary-color">
                   <strong>Valor Final:</strong> R${" "}
-                  {order.total_value.toFixed(2)}
+                  {(order.total_value + order.service_fee).toFixed(2)}
                 </Text>
                 <FontAwesomeIcon
                   onClick={() => removeRecentOrderCard(index)}
@@ -60,6 +60,9 @@ export default function RecentOrdersCard() {
               </div>
             ))}
           </div>
+          <br />
+          <br />
+          <br />
         </>
       )}
     </section>
