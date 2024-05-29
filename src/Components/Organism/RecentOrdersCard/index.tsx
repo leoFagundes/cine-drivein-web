@@ -3,7 +3,11 @@ import { Order } from "../../../Types/types";
 import Text from "../../Atoms/Text";
 import style from "./RecentOrdersCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClose,
+  faArrowUpRightFromSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import RecentOrderModalView from "../RecentOrderModalView";
 
 export default function RecentOrdersCard() {
   const [recentOrders, setRecentOrders] = useState<Order[]>(() => {
@@ -11,6 +15,8 @@ export default function RecentOrdersCard() {
     return storedOrders ? JSON.parse(storedOrders) : [];
   });
   const [isUpdated, setIsUpdated] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(true);
+  const [currentClickedItem, setCurrentClickedItem] = useState<Order>();
 
   useEffect(() => {
     setRecentOrders(() => {
@@ -39,9 +45,11 @@ export default function RecentOrdersCard() {
     <section className={style.container}>
       {recentOrders.length > 0 && (
         <>
-          <Text fontWeight="semibold">Últimos Pedidos</Text>
+          <Text fontWeight="semibold" fontSize="mediumLarge">
+            Últimos Pedidos
+          </Text>
           <div className={style.content}>
-            {recentOrders.map((order, index) => (
+            {recentOrders.reverse().map((order, index) => (
               <div key={index} className={style.recentOrderCards}>
                 <Text fontAlign="left" fontColor="background-secondary-color">
                   <strong>Vaga:</strong> {order.spot}
@@ -50,13 +58,25 @@ export default function RecentOrdersCard() {
                   <strong>Valor Final:</strong> R${" "}
                   {(order.total_value + order.service_fee).toFixed(2)}
                 </Text>
-                <FontAwesomeIcon
-                  onClick={() => removeRecentOrderCard(index)}
-                  className={style.closeIcon}
-                  size="lg"
-                  color="black"
-                  icon={faClose}
-                />
+                <div className={style.icons}>
+                  <FontAwesomeIcon
+                    onClick={() => {
+                      setIsOrderModalOpen(true);
+                      setCurrentClickedItem(recentOrders[index]);
+                    }}
+                    className={style.openOrderIcon}
+                    size="sm"
+                    color="black"
+                    icon={faArrowUpRightFromSquare}
+                  />
+                  <FontAwesomeIcon
+                    onClick={() => removeRecentOrderCard(index)}
+                    className={style.closeIcon}
+                    size="lg"
+                    color="black"
+                    icon={faClose}
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -65,6 +85,11 @@ export default function RecentOrdersCard() {
           <br />
         </>
       )}
+      <RecentOrderModalView
+        isOpen={isOrderModalOpen}
+        order={currentClickedItem}
+        onClose={() => setIsOrderModalOpen(false)}
+      />
     </section>
   );
 }
