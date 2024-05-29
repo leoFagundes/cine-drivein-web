@@ -279,12 +279,15 @@ export default function ItemModal({
                 itemToAdd.quantity !== 0 ? itemToAdd.quantity.toString() : ""
               }
               placeholder="Quantidade deste item (padrão: 1)"
-              onChange={(e) =>
+              onChange={(e) => {
                 setItemToAdd({
                   ...itemToAdd,
-                  quantity: parseInt(e.target.value),
-                })
-              }
+                  quantity:
+                    parseInt(e.target.value) > 10
+                      ? 10
+                      : parseInt(e.target.value),
+                });
+              }}
               marginTop="22px"
               marginBottom="14px"
             />

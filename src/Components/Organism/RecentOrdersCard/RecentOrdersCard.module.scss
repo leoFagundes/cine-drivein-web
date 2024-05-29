@@ -1,0 +1,48 @@
+@import "../../../Global.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  width: 280px;
+  margin-top: 20px;
+
+  .recentOrderCards {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    // height: 70px;
+    border-radius: 10px;
+    background-color: $main-white;
+    padding: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .infoSide {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .closeIcon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        color: $invalid-color;
+      }
+    }
+  }
+}

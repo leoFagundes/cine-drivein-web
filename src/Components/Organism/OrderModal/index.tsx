@@ -191,6 +191,11 @@ export default function OrderModal({
           total_value: 0,
           items: [],
         });
+        let storedOrderList = localStorage.getItem("StoredOrderList");
+        let orderList = storedOrderList ? JSON.parse(storedOrderList) : [];
+
+        orderList.push(order);
+        localStorage.setItem("StoredOrderList", JSON.stringify(orderList));
         localStorage.removeItem("order");
         setIsLoading(false);
         navigate("/", { state: { from: "201:OrderCreated" } });

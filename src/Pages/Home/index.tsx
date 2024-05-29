@@ -16,6 +16,7 @@ import Alert from "../../Components/Molecules/Alert";
 import { Item, Schedule } from "../../Types/types";
 import FeedbackModal from "../../Components/Organism/FeedbackModal";
 import ItemRepositories from "../../Services/repositories/ItemRepositories";
+import RecentOrdersCard from "../../Components/Organism/RecentOrdersCard";
 
 const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
@@ -342,7 +343,7 @@ export default function Home() {
             />
           }
         />
-
+        <RecentOrdersCard />
         <Modal
           isOpen={isParkingModalOpen}
           onClose={() => setIsParkinModalOpen(false)}
