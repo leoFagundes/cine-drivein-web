@@ -65,3 +65,7 @@ export type ItemInOrder = {
   additional_drink?: string;
   additional_sweet?: string;
 };
+
+export type OrderWithTime = Order & {
+  createdAt: string;
+};

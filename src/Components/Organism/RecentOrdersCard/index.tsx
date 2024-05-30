@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Order } from "../../../Types/types";
+import { OrderWithTime } from "../../../Types/types";
 import Text from "../../Atoms/Text";
 import style from "./RecentOrdersCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,13 +10,13 @@ import {
 import RecentOrderModalView from "../RecentOrderModalView";
 
 export default function RecentOrdersCard() {
-  const [recentOrders, setRecentOrders] = useState<Order[]>(() => {
+  const [recentOrders, setRecentOrders] = useState<OrderWithTime[]>(() => {
     const storedOrders = localStorage.getItem("StoredOrderList");
     return storedOrders ? JSON.parse(storedOrders) : [];
   });
   const [isUpdated, setIsUpdated] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(true);
-  const [currentClickedItem, setCurrentClickedItem] = useState<Order>();
+  const [currentClickedItem, setCurrentClickedItem] = useState<OrderWithTime>();
 
   useEffect(() => {
     setRecentOrders(() => {
@@ -51,12 +51,27 @@ export default function RecentOrdersCard() {
           <div className={style.content}>
             {recentOrders.reverse().map((order, index) => (
               <div key={index} className={style.recentOrderCards}>
-                <Text fontAlign="left" fontColor="background-secondary-color">
+                <Text
+                  fontSize="mediumSmall"
+                  fontAlign="left"
+                  fontColor="background-secondary-color"
+                >
                   <strong>Vaga:</strong> {order.spot}
                 </Text>
-                <Text fontAlign="left" fontColor="background-secondary-color">
+                <Text
+                  fontSize="mediumSmall"
+                  fontAlign="left"
+                  fontColor="background-secondary-color"
+                >
                   <strong>Valor Final:</strong> R${" "}
                   {(order.total_value + order.service_fee).toFixed(2)}
+                </Text>
+                <Text
+                  fontSize="small"
+                  fontAlign="left"
+                  fontColor="placeholder-color"
+                >
+                  <i>{order.createdAt}</i>
                 </Text>
                 <div className={style.icons}>
                   <FontAwesomeIcon

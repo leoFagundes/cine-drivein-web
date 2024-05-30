@@ -1,11 +1,11 @@
-import { ItemInOrder, Order } from "../../../Types/types";
+import { ItemInOrder, OrderWithTime } from "../../../Types/types";
 import Text from "../../Atoms/Text";
 import styles from "./OrderCard.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
 
 type OrderCardType = {
-  order: Order;
+  order: OrderWithTime;
 };
 
 type GroupedOrderItem = {
@@ -189,6 +189,9 @@ export default function OrderCard({ order }: OrderCardType) {
           </Text>
           <Text fontSize="mediumSmall" fontColor="background-secondary-color">
             <strong>Telefone:</strong> {order.phone}
+          </Text>
+          <Text fontSize="small" fontColor="placeholder-color">
+            <i>{order.createdAt}</i>
           </Text>
         </div>
         <div className={styles.line} />

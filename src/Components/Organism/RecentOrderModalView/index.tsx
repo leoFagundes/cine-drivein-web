@@ -2,12 +2,12 @@ import { MouseEvent } from "react";
 import styles from "./RecentOrderModalView.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Order } from "../../../Types/types";
+import { OrderWithTime } from "../../../Types/types";
 import OrderCard from "../OrderCard";
 
 type ModalType = {
   isOpen: boolean;
-  order: Order | undefined;
+  order: OrderWithTime | undefined;
   onClose: VoidFunction;
 };
 

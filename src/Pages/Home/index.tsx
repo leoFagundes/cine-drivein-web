@@ -300,6 +300,7 @@ export default function Home() {
           }}
           linkWhatsapp={openWhatsApp}
         />
+
         <FormTemplate
           label="Para fazer seu pedido, preencha os campos abaixo"
           inputs={[
@@ -347,6 +348,7 @@ export default function Home() {
           }
         />
         <RecentOrdersCard />
+
         <Modal
           isOpen={isParkingModalOpen}
           onClose={() => setIsParkinModalOpen(false)}

@@ -170,6 +170,10 @@ export default function OrderModal({
     }
   }
 
+  function formatNumber(number: number) {
+    return number < 10 ? "0" + number : number;
+  }
+
   const handleFinishOrderClick = async () => {
     if (order) {
       if (order.items.length === 0) {
@@ -191,10 +195,25 @@ export default function OrderModal({
           total_value: 0,
           items: [],
         });
+
+        // Obter a data e a hora atual
+        const now = new Date();
+        const ano = formatNumber(now.getFullYear());
+        const mes = formatNumber(now.getMonth() + 1); // Meses são indexados a partir de 0
+        const dia = formatNumber(now.getDate());
+        const horas = formatNumber(now.getHours());
+        const minutos = formatNumber(now.getMinutes());
+        const segundos = formatNumber(now.getSeconds());
+        // Formatar a data e hora como uma string
+        const dataHoraAtual = `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
         let storedOrderList = localStorage.getItem("StoredOrderList");
         let orderList = storedOrderList ? JSON.parse(storedOrderList) : [];
+        let orderWithTime = {
+          ...order,
+          createdAt: dataHoraAtual,
+        };
 
-        orderList.push(order);
+        orderList.push(orderWithTime);
         localStorage.setItem("StoredOrderList", JSON.stringify(orderList));
         localStorage.removeItem("order");
         setIsLoading(false);
