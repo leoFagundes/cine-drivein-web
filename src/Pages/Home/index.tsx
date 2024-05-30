@@ -295,7 +295,7 @@ export default function Home() {
         <FeedbackModal
           isOpen={isFeedbackModalOpen}
           onClose={() => {
-            setIsFeedbackModalOpen(false);
+            // setIsFeedbackModalOpen(false);
             document.location.reload();
           }}
           linkWhatsapp={openWhatsApp}

@@ -45,55 +45,61 @@ export default function RecentOrdersCard() {
     <section className={style.container}>
       {recentOrders.length > 0 && (
         <>
+          <div className={style.line} />
           <Text fontWeight="semibold" fontSize="mediumLarge">
             Últimos Pedidos
           </Text>
           <div className={style.content}>
-            {recentOrders.reverse().map((order, index) => (
-              <div key={index} className={style.recentOrderCards}>
-                <Text
-                  fontSize="mediumSmall"
-                  fontAlign="left"
-                  fontColor="background-secondary-color"
-                >
-                  <strong>Vaga:</strong> {order.spot}
-                </Text>
-                <Text
-                  fontSize="mediumSmall"
-                  fontAlign="left"
-                  fontColor="background-secondary-color"
-                >
-                  <strong>Valor Final:</strong> R${" "}
-                  {(order.total_value + order.service_fee).toFixed(2)}
-                </Text>
-                <Text
-                  fontSize="small"
-                  fontAlign="left"
-                  fontColor="placeholder-color"
-                >
-                  <i>{order.createdAt}</i>
-                </Text>
-                <div className={style.icons}>
-                  <FontAwesomeIcon
-                    onClick={() => {
-                      setIsOrderModalOpen(true);
-                      setCurrentClickedItem(recentOrders[index]);
-                    }}
-                    className={style.openOrderIcon}
-                    size="sm"
-                    color="black"
-                    icon={faArrowUpRightFromSquare}
-                  />
-                  <FontAwesomeIcon
-                    onClick={() => removeRecentOrderCard(index)}
-                    className={style.closeIcon}
-                    size="lg"
-                    color="black"
-                    icon={faClose}
-                  />
+            {recentOrders
+              .slice()
+              .reverse()
+              .map((order, index) => (
+                <div key={index} className={style.recentOrderCards}>
+                  <Text
+                    fontSize="mediumSmall"
+                    fontAlign="left"
+                    fontColor="background-secondary-color"
+                  >
+                    <strong>Vaga:</strong> {order.spot}
+                  </Text>
+                  <Text
+                    fontSize="mediumSmall"
+                    fontAlign="left"
+                    fontColor="background-secondary-color"
+                  >
+                    <strong>Valor Final:</strong> R${" "}
+                    {(order.total_value + order.service_fee).toFixed(2)}
+                  </Text>
+                  <Text
+                    fontSize="small"
+                    fontAlign="left"
+                    fontColor="placeholder-color"
+                  >
+                    <i>{order.createdAt}</i>
+                  </Text>
+                  <div className={style.icons}>
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        setIsOrderModalOpen(true);
+                        setCurrentClickedItem(recentOrders[index]);
+                      }}
+                      className={style.openOrderIcon}
+                      size="sm"
+                      color="black"
+                      icon={faArrowUpRightFromSquare}
+                    />
+                    <FontAwesomeIcon
+                      onClick={() =>
+                        removeRecentOrderCard(recentOrders.length - 1 - index)
+                      }
+                      className={style.closeIcon}
+                      size="lg"
+                      color="black"
+                      icon={faClose}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
           <br />
           <br />
