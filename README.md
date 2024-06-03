@@ -78,6 +78,22 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Prettier](https://prettier.io/)
 <!-- - [Jest](https://jestjs.io/) -->
 
+Além das tecnologias mencionadas anteriormente, este projeto também fez uso das seguintes ferramentas:
+
+- [Figma](https://www.figma.com/)
+- [Trello](https://trello.com/) 
+
+<h2 align="center" id="arquitetura">Metodologia</h2>
+
+Este projeto utiliza a metodologia Atomic Design para organizar e estruturar os componentes da interface. O Atomic Design é uma metodologia que divide os componentes em cinco níveis distintos, que são átomos, moléculas, organismos, templates e páginas. Cada nível representa uma abstração diferente e ajuda na construção de componentes reutilizáveis e escaláveis.
+
+- **Átomos**: São os elementos de interface mais básicos, como botões, inputs e ícones.
+- **Moléculas**: São combinações de átomos que formam componentes mais complexos, como um campo de formulário.
+- **Organismos**: São componentes compostos por moléculas e/ou átomos e representam partes de uma interface mais completa, como um formulário completo.
+- **Templates**: São estruturas que organizam os organismos em uma página, definindo a disposição e o layout.
+- **Páginas**: São instâncias específicas de templates, onde são definidos os dados e conteúdos específicos.
+
+O uso do Atomic Design neste projeto proporciona uma melhor organização e manutenção do código, facilitando a criação de novos componentes e a reutilização de código já existente.
 
 ---
 
