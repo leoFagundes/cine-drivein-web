@@ -12,7 +12,7 @@
  <a href="#demonstracao-da-aplicacao">Demonstração da Aplicação</a> • 
  <a href="#pre-requisitos">Pré-requisitos</a> • 
  <a href="#rodando-a-aplicacao">Rodando a aplicação</a> • 
- <a href="#tecnologias">Tecnologias</a> • 
+ <a href="#tecnologias">Tecnologias</a>
 </p>
 
 <h2 align="center" id="features">Features</h2>
@@ -29,6 +29,17 @@
 - [x] Visualização de Pedidos Recentes
 
 <h2 align="center" id="demonstracao-da-aplicacao">Demonstração da Aplicação</h2>
+
+<div align="center">
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/home_template.jpg" height="400px" />‎ ‎  ‎ 
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/close_template.jpg" height="400px" />‎ ‎  ‎ 
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/menu_template.jpg" height="400px" />‎ ‎  ‎ 
+</div>
+<div align="center">
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/finish_order.jpg" height="400px" />‎ ‎  ‎ 
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/item_template.jpg" height="400px" />‎ ‎  ‎ 
+<img src="https://github.com/leoFagundes/cine-drivein-web/blob/main/public/assets/github/feedback_template.jpg" height="400px" /> ‎  ‎ 	
+</div>
 
 <h2 align="center" id="pre-requisitos">Pré-requisitos</h2>
 
