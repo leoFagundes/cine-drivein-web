@@ -81,7 +81,9 @@ export default function RecentOrdersCard() {
                     <FontAwesomeIcon
                       onClick={() => {
                         setIsOrderModalOpen(true);
-                        setCurrentClickedItem(recentOrders[index]);
+                        setCurrentClickedItem(
+                          recentOrders.slice().reverse()[index]
+                        );
                       }}
                       className={style.openOrderIcon}
                       size="sm"

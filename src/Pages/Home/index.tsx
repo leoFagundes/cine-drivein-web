@@ -22,7 +22,7 @@ const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
 const ERROR_PHONE_FORMAT_MESSAGE = "Deve estar no formato (DD) 9XXXX-XXXX";
 const ERROR_SPOT_MESSAGE = "Vaga inválida.";
-const ERROR_SPOT_MESSAGE2 = "Sua vaga são 3 ou 4 dígitos";
+const ERROR_SPOT_MESSAGE2 = "Sua vaga contém 3 ou 4 dígitos";
 const ORDER_CREATED_SUCCESSFULLY = "Pedido enviado com sucesso";
 
 export default function Home() {
