@@ -48,7 +48,6 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
 Além disto irá precisar um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
-
 <h2 align="center" id="rodando-a-aplicacao">🚀 Rodando a aplicação</h2>
 
 ```bash
