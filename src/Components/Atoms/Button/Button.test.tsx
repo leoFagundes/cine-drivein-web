@@ -1,0 +1,36 @@
+import Button from "./index";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { click } from "@testing-library/user-event/dist/click";
+import exp from "constants";
+
+const mockFunction = jest.fn();
+
+describe("#Button", () => {
+  test("renders the button with the correct label", () => {
+    render(<Button onClick={() => ""} label="MyButton" />);
+    const button = screen.getByText("MyButton");
+    expect(button).toBeVisible();
+  });
+
+  test("calls the onClick handler when clicked", () => {
+    render(<Button onClick={mockFunction} label="MyButton" />);
+    const button = screen.getByText("MyButton");
+
+    userEvent.click(button);
+    expect(mockFunction).toHaveBeenCalledTimes(1);
+  });
+
+  test("change to correct color", () => {
+    render(
+      <Button
+        onClick={mockFunction}
+        label="MyButton"
+        backGroundColor="invalid-color"
+      />
+    );
+
+    const button = screen.getByText("MyButton");
+    expect(button).toHaveClass("backgroundInvalidColor");
+  });
+});
