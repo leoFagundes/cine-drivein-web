@@ -1,8 +1,6 @@
 import Button from "./index";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { click } from "@testing-library/user-event/dist/click";
-import exp from "constants";
 
 const mockFunction = jest.fn();
 
