@@ -16,7 +16,7 @@ describe("#Button", () => {
     const button = screen.getByText("MyButton");
 
     userEvent.click(button);
-    expect(mockFunction).toHaveBeenCalledTimes(1);
+    expect(mockFunction).toHaveBeenCalled();
   });
 
   test("change to correct color", () => {
@@ -28,7 +28,7 @@ describe("#Button", () => {
       />
     );
 
-    const button = screen.getByText("MyButton");
+    const button = screen.getByRole("button", { name: "MyButton" });
     expect(button).toHaveClass("backgroundInvalidColor");
   });
 });

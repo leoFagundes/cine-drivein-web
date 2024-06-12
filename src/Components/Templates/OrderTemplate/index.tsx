@@ -11,7 +11,7 @@ import { LoadingFullScreenTemplate } from "../LoadingFullScreenTemplate";
 import ItemModal from "../../Organism/ItemModal";
 import OrderModal from "../../Organism/OrderModal";
 import Alert from "../../Molecules/Alert";
-import FloatingButton from "../../Atoms/FloatingButton";
+import FloatingButton from "../../Molecules/FloatingButton";
 import ScheduleRepositories from "../../../Services/repositories/ScheduleRepositories";
 
 type OrderTemplateType = {

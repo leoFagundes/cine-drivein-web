@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import styles from "./FloatingButton.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import Text from "../Text";
+import Text from "../../Atoms/Text";
 
 type FloatinButtonType = {
   scrollUp?: boolean;
@@ -47,9 +47,14 @@ export default function FloatingButton({
   return (
     <div
       className={`${styles.container} ${!isVisible ? styles.isInvisible : ""}`}
+      data-testid="floatingButtonElement"
     >
       {label && icon && onClick && (
-        <div className={styles.boxContent} onClick={onClick}>
+        <div
+          className={styles.boxContent}
+          onClick={onClick}
+          data-testid="floatingMainContent"
+        >
           <div className={styles.icon}>
             {icon}
             {quantity !== undefined && (
@@ -68,7 +73,11 @@ export default function FloatingButton({
         </div>
       )}
       {scrollUp && (
-        <div className={styles.boxContent} onClick={scrollToTop}>
+        <div
+          className={styles.boxContent}
+          onClick={scrollToTop}
+          data-testid="floatingScrollUpContent"
+        >
           <div className={styles.icon}>
             <FontAwesomeIcon size="lg" icon={faArrowUp} color="white" />
           </div>
