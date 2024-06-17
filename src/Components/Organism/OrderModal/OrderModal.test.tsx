@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import OrderModal from ".";
 import { Order } from "../../../Types/types";
+import { MemoryRouter } from "react-router-dom";
 
 const mockOrder: Order = {
   _id: "1",
@@ -41,14 +42,16 @@ const mockShowAlert = jest.fn();
 describe("#OrderModal", () => {
   test("renders the OrderModal correctly", () => {
     render(
-      <OrderModal
-        order={mockOrder}
-        setOrder={mockSetOrder}
-        onClose={mockOnClose}
-        isOpen={true}
-        setIsLoading={mockSetIsLoading}
-        showAlert={mockShowAlert}
-      />
+      <MemoryRouter>
+        <OrderModal
+          order={mockOrder}
+          setOrder={mockSetOrder}
+          onClose={mockOnClose}
+          isOpen={true}
+          setIsLoading={mockSetIsLoading}
+          showAlert={mockShowAlert}
+        />
+      </MemoryRouter>
     );
   });
 });
