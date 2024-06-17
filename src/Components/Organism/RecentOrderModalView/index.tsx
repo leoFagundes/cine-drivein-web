@@ -3,7 +3,7 @@ import styles from "./RecentOrderModalView.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { OrderWithTime } from "../../../Types/types";
-import OrderCard from "../OrderCard";
+import OrderCard from "../ViewOrderCard";
 
 type ModalType = {
   isOpen: boolean;

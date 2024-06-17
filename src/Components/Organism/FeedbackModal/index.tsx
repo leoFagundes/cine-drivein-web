@@ -26,7 +26,7 @@ export default function FeedbackModal({
     if (localStorage.getItem("name")) {
       var localStorageName = localStorage.getItem("name");
       setName(localStorageName ? localStorageName : "");
-      console.log("Nome recuperado do localStorage:", name);
+      console.log("Nome recuperado:", name);
     } else {
       console.log('A variável "name" não está armazenada no localStorage.');
     }

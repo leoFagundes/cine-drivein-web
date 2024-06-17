@@ -248,11 +248,17 @@ export default function ItemModal({
             <div>
               {item.photo ? (
                 <div
+                  data-testid="Item Photo"
                   className={styles.image}
                   style={{ backgroundImage: `url("${item.photo}")` }}
                 />
               ) : (
-                <FontAwesomeIcon size="3x" icon={faImages} color="white" />
+                <FontAwesomeIcon
+                  data-testid="Item Photo"
+                  size="3x"
+                  icon={faImages}
+                  color="white"
+                />
               )}
             </div>
           </div>

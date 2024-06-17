@@ -19,7 +19,7 @@ export default function ItemCard({ item, onClick }: ItemCardType) {
   };
 
   return (
-    <div onClick={onClick} className={styles.container}>
+    <div data-testid="container" onClick={onClick} className={styles.container}>
       <div className={styles.itemImage}>
         {item.photo ? (
           <div style={{ backgroundImage: `url("${item.photo}")` }} />

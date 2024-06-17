@@ -17,7 +17,11 @@ export const Modal = ({ children, onClose, isOpen }: ModalType) => {
   return (
     <>
       {isOpen && (
-        <div onClick={handleCloseModalWith} className={styles.container}>
+        <div
+          data-testid="container"
+          onClick={handleCloseModalWith}
+          className={styles.container}
+        >
           <div className={styles.modalContainer}>
             <FontAwesomeIcon
               onClick={onClose}

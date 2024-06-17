@@ -1,4 +1,3 @@
-import ScrollUp from "../../Components/Molecules/FloatingButton";
 import OrderTemplate from "../../Components/Templates/OrderTemplate";
 import styles from "./Order.module.scss";
 
