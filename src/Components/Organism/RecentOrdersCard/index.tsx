@@ -91,6 +91,7 @@ export default function RecentOrdersCard() {
                       icon={faArrowUpRightFromSquare}
                     />
                     <FontAwesomeIcon
+                      data-testid="close-icon"
                       onClick={() =>
                         removeRecentOrderCard(recentOrders.length - 1 - index)
                       }

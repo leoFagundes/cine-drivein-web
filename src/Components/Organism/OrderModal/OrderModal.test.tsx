@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import OrderModal from ".";
-import { Item, ItemInOrder, Order } from "../../../Types/types";
+import { Order } from "../../../Types/types";
 import { MemoryRouter } from "react-router-dom";
 import OrderRepositories from "../../../Services/repositories/OrderRepositories";
 
@@ -111,7 +111,6 @@ describe("#OrderModal", () => {
     );
 
     const buttonElement = screen.getByText("Finalizar pedido");
-    console.log(buttonElement);
 
     fireEvent.click(buttonElement);
 
@@ -152,5 +151,46 @@ describe("#OrderModal", () => {
     fireEvent.click(icon);
 
     expect(mockSetOrder).toBeCalled();
+  });
+
+  test("nothing happens when you click on the button with no items added", async () => {
+    const newMockOrder = {
+      ...mockOrder,
+      items: [],
+    };
+
+    render(
+      <MemoryRouter>
+        <OrderModal
+          order={newMockOrder}
+          setOrder={mockSetOrder}
+          onClose={mockOnClose}
+          isOpen={true}
+          setIsLoading={mockSetIsLoading}
+          showAlert={mockShowAlert}
+        />
+      </MemoryRouter>
+    );
+
+    const buttonElement = screen.getByText("Finalizar pedido");
+
+    fireEvent.click(buttonElement);
+
+    await waitFor(() => {
+      expect(OrderRepositories.createOrder).not.toBeCalledWith(newMockOrder);
+      expect(mockSetOrder).not.toBeCalledWith({
+        username: "",
+        phone: "",
+        spot: 0,
+        status: "active",
+        money_payment: 0,
+        credit_payment: 0,
+        debit_payment: 0,
+        service_fee: 0,
+        total_value: 0,
+        items: [],
+      });
+      expect(mockSetIsLoading).not.toBeCalledWith(false);
+    });
   });
 });

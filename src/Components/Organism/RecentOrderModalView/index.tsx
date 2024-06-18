@@ -29,6 +29,7 @@ export default function RecentOrderModalView({
             <OrderCard order={order} />
           </div>
           <FontAwesomeIcon
+            data-testid="close-icon"
             onClick={onClose}
             className={styles.closeModalIcon}
             size="lg"
