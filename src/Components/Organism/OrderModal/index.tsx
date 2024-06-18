@@ -253,6 +253,7 @@ export default function OrderModal({
                 {groupedOrderItem.quantity}x {groupedOrderItem.item.name}
               </Text>
               <FontAwesomeIcon
+                data-testid="trash-icon"
                 className={styles.deleteItemIco}
                 size="lg"
                 icon={faTrashCan}
