@@ -249,7 +249,8 @@ export default function Home() {
   };
 
   const openWhatsApp = () => {
-    const phoneNumber = "5561999619114";
+    // const phoneNumber = "5561999619114";
+    const phoneNumber = "556185119092";
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
@@ -306,7 +307,7 @@ export default function Home() {
           inputs={[
             {
               value: name,
-              placeholder: "Nome",
+              placeholder: "Nome ou Apelido",
               onChange: (e) => handleNameWith(e.target.value),
               type: "text",
               errorLabel: nameError,

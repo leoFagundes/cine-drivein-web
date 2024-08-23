@@ -6,7 +6,7 @@ import { Item, Order } from "../../../Types/types";
 import ItemCard from "../../Organism/ItemCard";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { LoadingFullScreenTemplate } from "../LoadingFullScreenTemplate";
 import ItemModal from "../../Organism/ItemModal";
 import OrderModal from "../../Organism/OrderModal";
@@ -304,6 +304,9 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         quantity={order.items.length}
         onClick={() => setIsOrderModalOpen(true)}
       />
+      <div className={styles.closeModal} onClick={() => navigate("/")}>
+        <FontAwesomeIcon size="xl" icon={faLeftLong} color="white" />
+      </div>
       <br />
       <br />
       <br />

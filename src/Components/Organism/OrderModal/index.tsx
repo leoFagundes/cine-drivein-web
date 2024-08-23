@@ -86,7 +86,8 @@ export default function OrderModal({
   }, [isOpen, onClose]);
 
   const openWhatsApp = () => {
-    const phoneNumber = "5561999619114";
+    // const phoneNumber = "5561999619114";
+    const phoneNumber = "556185119092";
     const whatsappUrl = `https://wa.me/${phoneNumber}`;
     window.open(whatsappUrl, "_blank");
   };
@@ -348,7 +349,7 @@ export default function OrderModal({
             Meu Pedido
           </Text>
           <div className={styles.closeModal} onClick={onClose}>
-            <FontAwesomeIcon size="2x" icon={faLeftLong} color="white" />
+            <FontAwesomeIcon size="xl" icon={faLeftLong} color="white" />
           </div>
           <div className={styles.orderContent}>
             <div className={styles.orderInfo}>

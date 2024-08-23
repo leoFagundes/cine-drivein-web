@@ -10,14 +10,20 @@
   margin-bottom: 40px;
   position: relative;
 
+  .closeModal {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+  }
+
   .menuOrder {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 20px;
+    right: 20px;
     padding: 8px 4px;
 
     .quantityNotification {
@@ -46,10 +52,12 @@
 
   .menuTypes {
     display: flex;
+    align-items: center;
     overflow-x: scroll;
     gap: 22px;
     width: 100%;
     margin-top: 32px;
+    text-align: center;
 
     &::-webkit-scrollbar {
       height: 5px;
