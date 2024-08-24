@@ -138,13 +138,48 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     localStorage.setItem("order", JSON.stringify(order));
   }, [order]);
 
+  // useEffect(() => {
+  //   const fetchUniqueTypes = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const types = await ItemRepositories.getUniqueTypes();
+  //       const items = await ItemRepositories.getItems();
+  //       setUniqueTypes([ALL_TYPES_LABEL, ...types]);
+  //       setItems(items);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.error("Erro ao obter itens:", error);
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchUniqueTypes();
+  // }, []);
+
   useEffect(() => {
     const fetchUniqueTypes = async () => {
       setIsLoading(true);
       try {
         const types = await ItemRepositories.getUniqueTypes();
         const items = await ItemRepositories.getItems();
-        setUniqueTypes([ALL_TYPES_LABEL, ...types]);
+
+        const preferredOrder = ["Porções", "Lanches", "Vegetarianos", "Combos"];
+
+        const orderedTypes = preferredOrder.filter((type) =>
+          types.includes(type)
+        );
+
+        const remainingTypes = types.filter(
+          (type) => !preferredOrder.includes(type)
+        );
+
+        const sortedTypes = [
+          ALL_TYPES_LABEL,
+          ...orderedTypes,
+          ...remainingTypes,
+        ];
+
+        setUniqueTypes(sortedTypes);
         setItems(items);
         setIsLoading(false);
       } catch (error) {
