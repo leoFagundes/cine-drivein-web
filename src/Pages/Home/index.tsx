@@ -244,6 +244,12 @@ export default function Home() {
       return;
     }
 
+    if (spot.startsWith("0")) {
+      setIsParkinModalOpen(true);
+      setSpotError(ERROR_SPOT_MESSAGE);
+      return;
+    }
+
     const orderUrl = `/order?name=${name}&phone=${phone}&spot=${spot}`;
     navigate(orderUrl);
   };
