@@ -2,11 +2,12 @@ import styles from "./ItemModal.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-solid-svg-icons";
 import { Fragment, useEffect, useState } from "react";
-import { Item, Order } from "../../../Types/types";
+import { AdditionalItem, Item, Order } from "../../../Types/types";
 import Text from "../../Atoms/Text";
 import { Input } from "../../Atoms/Input/Input";
 import { Dropdown } from "../../Atoms/Dropdown";
 import Button from "../../Atoms/Button";
+import AdditionalItemRepositories from "../../../Services/repositories/AdditionalItemRepositories";
 
 type ItemModalType = {
   item: Item | null;
@@ -48,6 +49,25 @@ export default function ItemModal({
     additionalDrink: [""],
     additionalSweet: [""],
   });
+  const [additionalItemByDB, setAdditionalItemByDB] = useState<
+    AdditionalItem[]
+  >([]);
+
+  useEffect(() => {
+    async function fetchAdditionalItems() {
+      try {
+        const additionalItemsFetched =
+          await AdditionalItemRepositories.getAdditionalItems();
+
+        if (additionalItemsFetched)
+          setAdditionalItemByDB(additionalItemsFetched);
+      } catch (error) {
+        console.error("Erro ao carregar itens adicionais: ", error);
+      }
+    }
+
+    fetchAdditionalItems();
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -317,9 +337,14 @@ export default function ItemModal({
                       item.additionals_sweets.length > 0)) && <br></br>}
                 {item.additionals && item.additionals.length > 0 && (
                   <Dropdown
-                    options={item.additionals.map(
-                      (option: any) => option.additionalItem.name
-                    )}
+                    options={item.additionals
+                      .filter((option: any) => {
+                        const currentItem = additionalItemByDB.find(
+                          (item) => item.name === option.additionalItem.name
+                        );
+                        return currentItem?.isVisible;
+                      })
+                      .map((option: any) => option.additionalItem.name)}
                     value={itemToAdd.additional[index] || ""}
                     placeholder={
                       itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity)
@@ -347,9 +372,14 @@ export default function ItemModal({
                 {item.additionals_sauces &&
                   item.additionals_sauces.length > 0 && (
                     <Dropdown
-                      options={item.additionals_sauces.map(
-                        (option: any) => option.additionalItem.name
-                      )}
+                      options={item.additionals_sauces
+                        .filter((option: any) => {
+                          const currentItem = additionalItemByDB.find(
+                            (item) => item.name === option.additionalItem.name
+                          );
+                          return currentItem?.isVisible;
+                        })
+                        .map((option: any) => option.additionalItem.name)}
                       value={itemToAdd.additionalSauce[index] || ""}
                       placeholder={
                         itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity)
@@ -377,9 +407,14 @@ export default function ItemModal({
                 {item.additionals_drinks &&
                   item.additionals_drinks.length > 0 && (
                     <Dropdown
-                      options={item.additionals_drinks.map(
-                        (option: any) => option.additionalItem.name
-                      )}
+                      options={item.additionals_drinks
+                        .filter((option: any) => {
+                          const currentItem = additionalItemByDB.find(
+                            (item) => item.name === option.additionalItem.name
+                          );
+                          return currentItem?.isVisible;
+                        })
+                        .map((option: any) => option.additionalItem.name)}
                       value={itemToAdd.additionalDrink[index] || ""}
                       placeholder={
                         itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity)
@@ -407,9 +442,14 @@ export default function ItemModal({
                 {item.additionals_sweets &&
                   item.additionals_sweets.length > 0 && (
                     <Dropdown
-                      options={item.additionals_sweets.map(
-                        (option: any) => option.additionalItem.name
-                      )}
+                      options={item.additionals_sweets
+                        .filter((option: any) => {
+                          const currentItem = additionalItemByDB.find(
+                            (item) => item.name === option.additionalItem.name
+                          );
+                          return currentItem?.isVisible;
+                        })
+                        .map((option: any) => option.additionalItem.name)}
                       value={itemToAdd.additionalSweet[index] || ""}
                       placeholder={
                         itemToAdd.quantity <= 1 || isNaN(itemToAdd.quantity)
