@@ -7,10 +7,18 @@ type ModalType = {
   isOpen: boolean;
   onClose: VoidFunction;
   children: ReactNode;
+  patternCloseMethods?: boolean;
 };
 
-export const Modal = ({ children, onClose, isOpen }: ModalType) => {
+export const Modal = ({
+  children,
+  onClose,
+  isOpen,
+  patternCloseMethods = false,
+}: ModalType) => {
   const handleCloseModalWith = (event: MouseEvent) => {
+    if (patternCloseMethods) return;
+
     event.preventDefault();
     event.target === event.currentTarget && onClose();
   };
@@ -23,12 +31,14 @@ export const Modal = ({ children, onClose, isOpen }: ModalType) => {
           className={styles.container}
         >
           <div className={styles.modalContainer}>
-            <FontAwesomeIcon
-              onClick={onClose}
-              className={styles.closeModalIcon}
-              size="lg"
-              icon={faXmark}
-            />
+            {!patternCloseMethods && (
+              <FontAwesomeIcon
+                onClick={onClose}
+                className={styles.closeModalIcon}
+                size="lg"
+                icon={faXmark}
+              />
+            )}
             {children}
           </div>
         </div>

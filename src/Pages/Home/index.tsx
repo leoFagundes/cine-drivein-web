@@ -17,6 +17,7 @@ import { Item, Schedule } from "../../Types/types";
 import FeedbackModal from "../../Components/Organism/FeedbackModal";
 import ItemRepositories from "../../Services/repositories/ItemRepositories";
 import RecentOrdersCard from "../../Components/Organism/RecentOrdersCard";
+import Button from "../../Components/Atoms/Button";
 
 const ERROR_NAME_MESSAGE = "Nome de usuário inválido.";
 const ERROR_PHONE_MESSAGE = "Número de telefone inválido.";
@@ -40,6 +41,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isParkingModalOpen, setIsParkinModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(true);
   const [alertInfo, setAlertInfo] = useState<{
     isOpen: boolean;
     message: string;
@@ -74,6 +76,72 @@ export default function Home() {
       const img = new Image();
       img.src = url;
     });
+  }
+
+  function getUserLocation() {
+    const LOCATION_KEY = "user_location";
+    const TIME_LIMIT = 30 * 60 * 1000; // 30 minutos em milissegundos
+    const now = new Date().getTime();
+
+    // Tenta pegar dados do localStorage
+    const savedDataString = localStorage.getItem(LOCATION_KEY);
+
+    if (savedDataString) {
+      try {
+        const savedData = JSON.parse(savedDataString);
+        if (savedData.timestamp && now - savedData.timestamp < TIME_LIMIT) {
+          // Dados recentes, usa eles
+          console.log(
+            "Usando localização salva:",
+            savedData.latitude,
+            savedData.longitude
+          );
+          setIsLocationModalOpen(false);
+          return; // Sai da função, não precisa pedir localização
+        }
+      } catch (err) {
+        // Se der erro no parse, continua para pedir nova localização
+        console.error("Erro ao ler dados de localização do localStorage", err);
+      }
+    }
+
+    // Se chegou aqui, precisa pedir a localização nova
+    if (!("geolocation" in navigator)) {
+      alert("Geolocalização não é suportada pelo seu navegador.");
+      setIsLocationModalOpen(false);
+      return;
+    }
+
+    setIsLocationModalOpen(true); // abre modal
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log("Nova localização obtida:", latitude, longitude);
+        // Salva no localStorage com timestamp
+        localStorage.setItem(
+          LOCATION_KEY,
+          JSON.stringify({
+            latitude,
+            longitude,
+            timestamp: new Date().getTime(),
+          })
+        );
+        setIsLocationModalOpen(false);
+      },
+      (error) => {
+        console.error("Erro ao obter localização:", error);
+        alert(
+          "Não foi possível obter sua localização. Verifique as permissões do navegador."
+        );
+        setIsLocationModalOpen(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
   }
 
   useEffect(() => {
@@ -355,6 +423,34 @@ export default function Home() {
           }
         />
         <RecentOrdersCard />
+
+        <Modal
+          isOpen={isLocationModalOpen}
+          onClose={() => setIsLocationModalOpen(false)}
+          patternCloseMethods
+        >
+          <div className={style.userLocationModal}>
+            <h2>Precisamos da sua localização</h2>
+            <p>
+              Para garantir que você está dentro da área de cobertura e evitar
+              pedidos inválidos, solicitamos sua localização.
+            </p>
+            <p>
+              Realizar pedidos online com o objetivo deliberado de prejudicar um
+              estabelecimento, gerando prejuízo financeiro sem a intenção real
+              de consumir o produto ou serviço, pode ser enquadrado como crime
+              previsto na legislação brasileira, como estelionato ou dano, além
+              de configurar ato ilícito passível de responsabilização civil.
+            </p>
+            <p>
+              (Art. 171 e 163 do Código Penal, Art. 186 e 927 do Código Civil,
+              Lei 12.965/2014 - Marco Civil da Internet)
+            </p>
+
+            <Button label="Permitir localização" onClick={getUserLocation} />
+            <span onClick={openWhatsApp}>Precisa de ajuda?</span>
+          </div>
+        </Modal>
 
         <Modal
           isOpen={isParkingModalOpen}
