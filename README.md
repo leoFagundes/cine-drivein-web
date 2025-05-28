@@ -3,10 +3,6 @@
 ## Descrição do Projeto
 <p>O front-end web, criado para o do Cine Drive-in de Brasília, permite que os usuários visualizem o cardápio disponível e façam pedidos de forma prática e intuitiva. Através dessa aplicação, os clientes podem navegar pelos itens oferecidos, adicionar produtos ao carrinho e finalizar seu pedido. Essa aplicação é focada em uma navegação Mobile.</p>
 
-<h4 align="center"> 
-	🚧  Cine drive-in Web 🚀 Em construção...  🚧
-</h4>
-
 <p align="center">
  <a href="#features">Features</a> •
  <a href="#demonstracao-da-aplicacao">Demonstração da Aplicação</a> • 
