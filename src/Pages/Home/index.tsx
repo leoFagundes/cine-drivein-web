@@ -41,7 +41,22 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isParkingModalOpen, setIsParkinModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const [isLocationModalOpen, setIsLocationModalOpen] = useState(true);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(() => {
+    const LOCATION_KEY = "user_location";
+    const TIME_LIMIT = 45 * 60 * 1000; // 30 minutos em milissegundos
+    const now = new Date().getTime();
+
+    // Tenta pegar dados do localStorage
+    const savedDataString = localStorage.getItem(LOCATION_KEY);
+
+    if (savedDataString) {
+      const savedData = JSON.parse(savedDataString);
+      if (savedData.timestamp && now - savedData.timestamp < TIME_LIMIT) {
+        return false;
+      }
+    }
+    return true;
+  });
   const [alertInfo, setAlertInfo] = useState<{
     isOpen: boolean;
     message: string;
@@ -80,7 +95,7 @@ export default function Home() {
 
   function getUserLocation() {
     const LOCATION_KEY = "user_location";
-    const TIME_LIMIT = 30 * 60 * 1000; // 30 minutos em milissegundos
+    const TIME_LIMIT = 45 * 60 * 1000; // 30 minutos em milissegundos
     const now = new Date().getTime();
 
     // Tenta pegar dados do localStorage
