@@ -27,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "cp public/htaccess-template build/.htaccess",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=jsdom",
     "test:coverage": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --env=jsdom --coverage",
     "eject": "react-scripts eject"
