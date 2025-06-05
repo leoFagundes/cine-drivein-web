@@ -106,7 +106,9 @@ export default function OrderModal({
       });
       if (groupedItems[key]) {
         groupedItems[key].quantity++;
-        groupedItems[key].totalValue += orderItem.item.value;
+        groupedItems[key].totalValue += orderItem.item.visibleValueToClient
+          ? orderItem.item.visibleValueToClient
+          : orderItem.item.value;
         if (
           orderItem.observation &&
           !groupedItems[key].observations.includes(orderItem.observation)
@@ -116,7 +118,9 @@ export default function OrderModal({
       } else {
         groupedItems[key] = {
           quantity: 1,
-          totalValue: orderItem.item.value,
+          totalValue: orderItem.item.visibleValueToClient
+            ? orderItem.item.visibleValueToClient
+            : orderItem.item.value,
           observations: orderItem.observation ? [orderItem.observation] : [],
           additional: orderItem.additional ? orderItem.additional : "",
           additional_sauce: orderItem.additional_sauce
@@ -180,9 +184,24 @@ export default function OrderModal({
       if (order.items.length === 0) {
         return;
       }
+
       setIsLoading(true);
       try {
-        await OrderRepositories.createOrder(order);
+        // recalcula o valor total ignorando o visibleValueToClient
+        const calculatedTotal = order.items.reduce((total, current) => {
+          const unitValue = current.item.value ?? 0;
+          return total + unitValue;
+        }, 0);
+
+        const serviceFee = Number((calculatedTotal * 0.1).toFixed(2));
+
+        const updatedOrder = {
+          ...order,
+          total_value: calculatedTotal,
+          service_fee: serviceFee,
+        };
+
+        await OrderRepositories.createOrder(updatedOrder);
         console.log("Pedido criado com sucesso");
         setOrder({
           username: "",

@@ -90,7 +90,9 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     if (order && order.items) {
       let totalValue = 0;
       order.items.forEach((orderItem) => {
-        totalValue += orderItem.item.value;
+        totalValue += orderItem.item.visibleValueToClient
+          ? orderItem.item.visibleValueToClient
+          : orderItem.item.value;
       });
       setOrder((prevOrder) => ({
         ...prevOrder,

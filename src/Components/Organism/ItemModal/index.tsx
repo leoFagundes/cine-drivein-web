@@ -481,7 +481,12 @@ export default function ItemModal({
             <Text fontSize="mediumLarge" fontWeight="semibold">
               Valor: R${" "}
               {itemToAdd.quantity > 1
-                ? (item.value * itemToAdd.quantity).toFixed(2)
+                ? (item.visibleValueToClient
+                    ? item.visibleValueToClient * itemToAdd.quantity
+                    : item.value * itemToAdd.quantity
+                  ).toFixed(2)
+                : item.visibleValueToClient
+                ? item.visibleValueToClient.toFixed(2)
                 : item.value.toFixed(2)}
             </Text>
           </div>

@@ -39,7 +39,10 @@ export default function ItemCard({ item, onClick }: ItemCardType) {
             Valor:
           </Text>
           <Text fontWeight="regular" fontSize="mediumSmall">
-            R$ {item.value.toFixed(2)}
+            R${" "}
+            {item.visibleValueToClient
+              ? item.visibleValueToClient.toFixed(2)
+              : item.value.toFixed(2)}
           </Text>
         </span>
       </div>

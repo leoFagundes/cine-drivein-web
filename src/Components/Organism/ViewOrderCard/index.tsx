@@ -46,7 +46,9 @@ export default function OrderCard({ order }: OrderCardType) {
       });
       if (groupedItems[key]) {
         groupedItems[key].quantity++;
-        groupedItems[key].totalValue += orderItem.item.value;
+        groupedItems[key].totalValue += orderItem.item.visibleValueToClient
+          ? orderItem.item.visibleValueToClient
+          : orderItem.item.value;
         if (
           orderItem.observation &&
           !groupedItems[key].observations.includes(orderItem.observation)
@@ -56,7 +58,9 @@ export default function OrderCard({ order }: OrderCardType) {
       } else {
         groupedItems[key] = {
           quantity: 1,
-          totalValue: orderItem.item.value,
+          totalValue: orderItem.item.visibleValueToClient
+            ? orderItem.item.visibleValueToClient
+            : orderItem.item.value,
           observations: orderItem.observation ? [orderItem.observation] : [],
           additional: orderItem.additional ? orderItem.additional : "",
           additional_sauce: orderItem.additional_sauce
