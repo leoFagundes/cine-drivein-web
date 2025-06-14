@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Text from "../../Atoms/Text";
 import styles from "./OrderTemplate.module.scss";
 import ItemRepositories from "../../../Services/repositories/ItemRepositories";
-import { Item, Order } from "../../../Types/types";
+import { Item, Order, SiteConfig } from "../../../Types/types";
 import ItemCard from "../../Organism/ItemCard";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import OrderModal from "../../Organism/OrderModal";
 import Alert from "../../Molecules/Alert";
 import FloatingButton from "../../Molecules/FloatingButton";
 import ScheduleRepositories from "../../../Services/repositories/ScheduleRepositories";
+import SiteConfigsRepository from "../../../Services/repositories/SiteConfigsRepositorie";
 
 type OrderTemplateType = {
   label: string;
@@ -140,32 +141,23 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
     localStorage.setItem("order", JSON.stringify(order));
   }, [order]);
 
-  // useEffect(() => {
-  //   const fetchUniqueTypes = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const types = await ItemRepositories.getUniqueTypes();
-  //       const items = await ItemRepositories.getItems();
-  //       setUniqueTypes([ALL_TYPES_LABEL, ...types]);
-  //       setItems(items);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.error("Erro ao obter itens:", error);
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchUniqueTypes();
-  // }, []);
-
   useEffect(() => {
     const fetchUniqueTypes = async () => {
       setIsLoading(true);
       try {
         const types = await ItemRepositories.getUniqueTypes();
         const items = await ItemRepositories.getItems();
+        const currentConfig: SiteConfig =
+          await SiteConfigsRepository.getConfigById("66e399ad3b867fd49fe79d0b");
 
-        const preferredOrder = ["Porções", "Lanches", "Vegetarianos", "Combos"];
+        // const preferredOrder = ["Porções", "Lanches", "Vegetarianos", "Combos"];
+        const preferredOrder = currentConfig.orderTypes || [
+          "Porções",
+          "Pipocas",
+          "Lanches",
+          "Vegetarianos",
+          "Combos",
+        ];
 
         const orderedTypes = preferredOrder.filter((type) =>
           types.includes(type)
@@ -233,7 +225,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
             {type}
           </Text>
           <Text fontSize="mediumSmall">
-            Nenhum item disponível para esta categoria.
+            Itens estão temporariamente desativados!
           </Text>
         </div>
       );

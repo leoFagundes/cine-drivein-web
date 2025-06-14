@@ -70,3 +70,15 @@ export type ItemInOrder = {
 export type OrderWithTime = Order & {
   createdAt: string;
 };
+
+export interface SiteConfig {
+  _id: string;
+  isClosed: boolean;
+  isEvent: string;
+  popUpImage: File | undefined | string;
+  popUpText: {
+    title: string;
+    description: string[];
+  };
+  orderTypes: string[];
+}
