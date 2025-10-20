@@ -339,8 +339,10 @@ export default function ItemModal({
                   <Dropdown
                     options={item.additionals
                       .filter((option: any) => {
+                        const name = option?.additionalItem?.name;
+                        if (!name) return false;
                         const currentItem = additionalItemByDB.find(
-                          (item) => item.name === option.additionalItem.name
+                          (item) => item.name === name
                         );
                         return currentItem?.isVisible;
                       })
@@ -374,8 +376,10 @@ export default function ItemModal({
                     <Dropdown
                       options={item.additionals_sauces
                         .filter((option: any) => {
+                          const name = option?.additionalItem?.name;
+                          if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === option.additionalItem.name
+                            (item) => item.name === name
                           );
                           return currentItem?.isVisible;
                         })
@@ -409,8 +413,10 @@ export default function ItemModal({
                     <Dropdown
                       options={item.additionals_drinks
                         .filter((option: any) => {
+                          const name = option?.additionalItem?.name;
+                          if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === option.additionalItem.name
+                            (item) => item.name === name
                           );
                           return currentItem?.isVisible;
                         })
@@ -444,8 +450,10 @@ export default function ItemModal({
                     <Dropdown
                       options={item.additionals_sweets
                         .filter((option: any) => {
+                          const name = option?.additionalItem?.name;
+                          if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === option.additionalItem.name
+                            (item) => item.name === name
                           );
                           return currentItem?.isVisible;
                         })
