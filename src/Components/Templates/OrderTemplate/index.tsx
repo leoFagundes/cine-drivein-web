@@ -71,7 +71,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
       } catch (error) {
         console.error(
           "Erro ao obter dados do horário de funcionamento:",
-          error
+          error,
         );
       }
     };
@@ -146,11 +146,10 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
       setIsLoading(true);
       try {
         const types = await ItemRepositories.getUniqueTypes();
-        const items = await ItemRepositories.getItems();
-        const currentConfig: SiteConfig =
-          await SiteConfigsRepository.getConfigById("66e399ad3b867fd49fe79d0b");
+        const currentConfig = await SiteConfigsRepository.getConfigById(
+          "66e399ad3b867fd49fe79d0b",
+        );
 
-        // const preferredOrder = ["Porções", "Lanches", "Vegetarianos", "Combos"];
         const preferredOrder = currentConfig.orderTypes || [
           "Porções",
           "Pipocas",
@@ -159,12 +158,12 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
           "Combos",
         ];
 
-        const orderedTypes = preferredOrder.filter((type) =>
-          types.includes(type)
+        const orderedTypes = preferredOrder.filter((type: string) =>
+          types.includes(type),
         );
 
         const remainingTypes = types.filter(
-          (type) => !preferredOrder.includes(type)
+          (type) => !preferredOrder.includes(type),
         );
 
         const sortedTypes = [
@@ -174,10 +173,9 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
         ];
 
         setUniqueTypes(sortedTypes);
-        setItems(items);
         setIsLoading(false);
       } catch (error) {
-        console.error("Erro ao obter itens:", error);
+        console.error("Erro ao obter tipos:", error);
         setIsLoading(false);
       }
     };
@@ -186,9 +184,39 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchItems = async () => {
+      try {
+        const newItems = await ItemRepositories.getItems();
+
+        if (isMounted) {
+          setItems((prev) => {
+            if (JSON.stringify(prev) === JSON.stringify(newItems)) {
+              return prev;
+            }
+            return newItems;
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar itens:", error);
+      }
+    };
+
+    fetchItems(); // primeira carga
+
+    const interval = setInterval(fetchItems, 3000); // atualiza a cada 3s
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     if (currentMenuType && menuTypesRef.current) {
       const currentTypeElement = menuTypesRef.current.querySelector(
-        `.${styles.currentType}`
+        `.${styles.currentType}`,
       ) as HTMLElement | null;
       const menuContainer = menuTypesRef.current;
 
@@ -212,7 +240,7 @@ export default function OrderTemplate({ label }: OrderTemplateType) {
 
   const renderItemsByType = (type: string) => {
     const filteredItems = items?.filter(
-      (item) => item.type === type && item.isVisible
+      (item) => item.type === type && item.isVisible,
     );
 
     if (!filteredItems || filteredItems.length === 0) {

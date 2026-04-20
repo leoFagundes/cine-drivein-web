@@ -54,19 +54,33 @@ export default function ItemModal({
   >([]);
 
   useEffect(() => {
-    async function fetchAdditionalItems() {
+    let isMounted = true;
+
+    const fetchAdditionalItems = async () => {
       try {
-        const additionalItemsFetched =
-          await AdditionalItemRepositories.getAdditionalItems();
+        const data = await AdditionalItemRepositories.getAdditionalItems();
 
-        if (additionalItemsFetched)
-          setAdditionalItemByDB(additionalItemsFetched);
+        if (!isMounted) return;
+
+        setAdditionalItemByDB((prev) => {
+          if (JSON.stringify(prev) === JSON.stringify(data)) {
+            return prev;
+          }
+          return data;
+        });
       } catch (error) {
-        console.error("Erro ao carregar itens adicionais: ", error);
+        console.error("Erro ao atualizar adicionais:", error);
       }
-    }
+    };
 
-    fetchAdditionalItems();
+    fetchAdditionalItems(); // inicial
+
+    const interval = setInterval(fetchAdditionalItems, 3000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -320,7 +334,7 @@ export default function ItemModal({
 
             {[
               ...Array(
-                Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1)
+                Math.max(isNaN(itemToAdd.quantity) ? 1 : itemToAdd.quantity, 1),
               ),
             ].map((_, index) => (
               <Fragment key={index}>
@@ -342,9 +356,12 @@ export default function ItemModal({
                         const name = option?.additionalItem?.name;
                         if (!name) return false;
                         const currentItem = additionalItemByDB.find(
-                          (item) => item.name === name
+                          (item) => item.name === name,
                         );
-                        return currentItem?.isVisible;
+                        return (
+                          currentItem?.isVisible ||
+                          itemToAdd.additional[index] === name
+                        );
                       })
                       .map((option: any) => option.additionalItem.name)}
                     value={itemToAdd.additional[index] || ""}
@@ -379,7 +396,7 @@ export default function ItemModal({
                           const name = option?.additionalItem?.name;
                           if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === name
+                            (item) => item.name === name,
                           );
                           return currentItem?.isVisible;
                         })
@@ -416,7 +433,7 @@ export default function ItemModal({
                           const name = option?.additionalItem?.name;
                           if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === name
+                            (item) => item.name === name,
                           );
                           return currentItem?.isVisible;
                         })
@@ -453,7 +470,7 @@ export default function ItemModal({
                           const name = option?.additionalItem?.name;
                           if (!name) return false;
                           const currentItem = additionalItemByDB.find(
-                            (item) => item.name === name
+                            (item) => item.name === name,
                           );
                           return currentItem?.isVisible;
                         })
@@ -494,8 +511,8 @@ export default function ItemModal({
                     : item.value * itemToAdd.quantity
                   ).toFixed(2)
                 : item.visibleValueToClient
-                ? item.visibleValueToClient.toFixed(2)
-                : item.value.toFixed(2)}
+                  ? item.visibleValueToClient.toFixed(2)
+                  : item.value.toFixed(2)}
             </Text>
           </div>
           <div className={styles.buttons}>
